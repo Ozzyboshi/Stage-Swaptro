@@ -1,4 +1,8 @@
 {
+	"Breakpoints":	[{
+			"Address":	201344,
+			"Active":	true
+		}],
 	"BreakOnException":	{
 		"BreakOnAnyException":	false,
 		"BreakOnException":	[]
