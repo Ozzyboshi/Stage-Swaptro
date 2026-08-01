@@ -55,6 +55,32 @@ Compression of rawcompresseddata is BK: ByteKiller
 
 Good: thanks to ancient (https://github.com/temisu/ancient) we now know that ByteKiller was used as the compression algorithm.
 
-There are a few ByteKiller decompression programs on pouet, so let's see whether they can decompress the data.
+## Memory Map
 
-![pouet search results](documentation_images/pouet.png)
+## Map
+
+| File offset | Address | Size | Contents |
+|---|---|---|---|
+| `$00000` | `$34000` | 5600 | Logo 320×35, 4 bitplanes (planes at +$000/+$578/+$AF0/+$1068) |
+| `$015E0` | `$355E0` | 288 | padding |
+| `$01700` | `$35700` | 74882 | ProTracker module "smells like pop" (16 samples, 18 patterns, songlen 30) |
+| `$13D82` | `$47D82` | 638 | zero padding |
+| `$14000` | `$48000` | 1252 | **Main code** |
+| `$144E4` | `$484E4` | 764 | Copperlist (terminated by `FFFF FFFE` at `$147DC`) |
+| `$147E4` | `$487E4` | 17 | `"graphics.library"` |
+| `$147F6` | `$487F6` | 4 | Saved GfxBase |
+| `$147FA` | `$487FA` | 32 | Level 3 interrupt handler (VERTB → mt_music, then `jmp` to the old `$6C`) |
+| `$1481A` | `$4881A` | 20 | `clear_screens` — clears `$70000`–`$7F000` |
+| `$1482E` | `$4882E` | 30 | `wait_2_frames` (polling `$DFF006`) |
+| `$1484C` | `$4884C` | 4488 | **8 text pages**, 40×16 characters + `$00` (641 bytes for a full page) |
+| `$159D4` | `$499D4` | 55 | Character table: `ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:-!zxqwas/&?()ie ` |
+| `$15A0B` | `$49A0B` | 464 | 8×8 font in "strip" format: 58 bytes per row × 8 rows |
+| `$15BDC` | `$49BDC` | 4 | Screen modulo = `$28` (40) |
+| `$15BE0` | `$49BE0` | ~1600 | ProTracker replayer: `mt_init=$49BE0`, `mt_end=$49C6A`, `mt_music=$49C8C` |
+| `$16220` | `$4A220` | ~480 | Replayer variables/tables |
+| `$16400` | `$4A400` | — | zeros (buffers) |
+| `$1B500` | `$4F500` | 1440 | Strip 320×9, 4 bitplanes (planes every `$168`) |
+| `$1BB00` | `$4FB00` | 1280 | Strip 320×8, 4 bitplanes (planes every `$140`) |
+| `$1C000` | `$50000` | 21120 | Background 320×176, 3 bitplanes (planes at `$50000`/`$51B80`/`$53700`) |
+
+End of image `$55280` = exactly the end of the background's third plane.
