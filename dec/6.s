@@ -1425,10 +1425,11 @@ LAB_4A2D4:
 LAB_4A2F0:
 	DS.L	5			;4a2f0
 	DC.L	$00080000		;4a304
-	DS.L	$1488			;4a308
+	DS.L	$1488-10			;4a308
 
 	; UPPER BANNER - raw data start
 UPPER_BANNER:
+	DS.L 10
 	DC.L	$093fe896,$0002afff,$ffffffff,$ffffffb7 ;4f528
 	DC.L	$f7aa8000,$00900020,$f454aa55,$28000000 ;4f538
 	DC.L	$d6ac4460		;4f548
