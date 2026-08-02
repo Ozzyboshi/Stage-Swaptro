@@ -72,9 +72,13 @@ We are ready to inject our code inside the emulator, on aira force:
 - File -> new project
 - Select the file rawdecompresseddata we copied before into an empty dir
 - Fill the preprocess window with the following values, I will explain why later, for now just trust me
-[img preprocess.png]
+
+![preprocess window](documentation_images/preprocess.png)
+
 - If everything is ok you should see something like this
-[img airastart.png]
+
+![AIRA Force startup](documentation_images/airastart.png)
+
 - Press CTRL+L, this will inject the swaptro into the emulator chipram
 - In the left pane, where the code is shown, right click over line 6207 (address 48000), there should be a bsr.w SUB_4881A, and select "Set PC", the swaptro should run on the emulator.
 
