@@ -55,6 +55,29 @@ Compression of rawcompresseddata is BK: ByteKiller
 
 Good: thanks to ancient (https://github.com/temisu/ancient) we now know that ByteKiller was used as the compression algorithm.
 
+Ancient can also decompress the whole file into another with command :
+
+```
+$ ancient d rawcompresseddata rawdecompresseddata
+```
+I put these files into the "ancient" dir on this repository if you want to take a look.
+
+## Let the fun begin
+
+Now we can start the real work, we need to disassemble the uncompressed blob and see what is inside, for that we use Aira Force,
+take the rawdecompresseddata file and copy it into a new empty folder, then open Aira force and start the emulator with f5, the kickstart screen should appear
+in the video window.
+
+We are ready to inject our code inside the emulator, on aira force:
+- File -> new project
+- Select the file rawdecompresseddata we copied before into an empty dir
+- Fill the preprocess window with the following values, I will explain why later, for now just trust me
+[img preprocess.png]
+- If everything is ok you should see something like this
+[img airastart.png]
+- Press CTRL+L, this will inject the swaptro into the emulator chipram
+- In the left pane, where the code is shown, right click over line 6207 (address 48000), there should be a bsr.w SUB_4881A, and select "Set PC", the swaptro should run on the emulator.
+
 ## Memory Map
 
 ## Map
