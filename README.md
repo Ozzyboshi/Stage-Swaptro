@@ -82,9 +82,16 @@ We are ready to inject our code inside the emulator, on aira force:
 - Press CTRL+L, this will inject the swaptro into the emulator chipram
 - In the left pane, where the code is shown, right click over line 6207 (address 48000), there should be a bsr.w SUB_4881A, and select "Set PC", the swaptro should run on the emulator.
 
-## Memory Map
+#Offset and Entry point
 
-## Map
+Before, in the preprocess windows we used value $34000 for offset and value $40000 for Entry address.
+The reason for that is that bytekiller decompresses the whole blob at a fixed memory area (value $34000) and, once extraction is completed, it forces the program counter to $4000 which is the first instruction to the Swaptro.
+This is the exact moment when Bytekiller hands over the control to the Swaptro code.
+If take a look at the extract routine source code (extracted with Aira Force) https://github.com/Ozzyboshi/Stage-Swaptro/blob/a71ed6397429ce65b26a7bee04b535f6c879625b/06.asm#L17 and https://github.com/Ozzyboshi/Stage-Swaptro/blob/a71ed6397429ce65b26a7bee04b535f6c879625b/06.asm#L91 this is clearly visibile.
+
+Another way to determine the entry point is looking for code, I usually look for an rts (4e75) and go backward until I found something that smells like amiga like loading sysbase into A6.
+
+## Memory Map
 
 | File offset | Address | Size | Contents |
 |---|---|---|---|
