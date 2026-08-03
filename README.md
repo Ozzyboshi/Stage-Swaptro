@@ -91,6 +91,32 @@ If take a look at the extract routine source code (extracted with Aira Force) ht
 
 Another way to determine the entry point is looking for code, I usually look for an rts (4e75) and go backward until I found something that smells like amiga like loading sysbase into A6.
 
+## Absolute addresses vs relocatable addresses
+
+Now, thanks to Aira Force (ira and vasm) we are able to disassemble and reassemble again but there are some issues that needs still to be solved.
+First of all the executable is in raw binary, if we want to distribute a uncompressed executable we need to rebuild in hunk format.
+Doing so the AmigaOs will read hunks of data from our executable and load them whenever there is enough space.
+This concept collides with our current format, for example, take a look at this line:
+
+https://github.com/Ozzyboshi/Stage-Swaptro/blob/2fb91880510cfa84159e977617ddd4a7afb2b255/dec/06_decompressed.asm#L34261
+
+Here the startup routine is writing the address of the new copperlist inside GFXBASE so that graphics.library, at the next frame, can set it into copper hardware registers.
+You will notice the issue immediately, the new copperlist is expected to be at $000484e4, which is always true when launching after bytekiller decompressed the blob but cannot be taken from granted if the user wants to launch it from the AmigaOS.
+For this reason I had to change this line into this
+https://github.com/Ozzyboshi/Stage-Swaptro/blob/2fb91880510cfa84159e977617ddd4a7afb2b255/dec/6.s#L386
+
+Now the copperlist address is determined by AmigaOS and it's not absolute anymore, a LABEL will help us determine where this piece of information is.
+As you can imagine there are tons of absolute references, mainly related to assets (music, and images in raw format) and I had to find all these places and provide some alternative way to figure out the correct addresses.
+
+In many situations I had also to change the logic a little bit because some assumptions cannot be true anymore for example:
+https://github.com/Ozzyboshi/Stage-Swaptro/blob/2fb91880510cfa84159e977617ddd4a7afb2b255/dec/6.s#L103
+Here in order to scroll text towards the top of the screen a simple addi.w is used because the author took for granted that the bitplanes are world aligned.
+In our AmigaOS compliant word we cannot give this for granted, if the bitplanes fall in a particular memory space we can have potential wrap ups leading to random glitches (or crashes?).
+My solution in this case was to store the whole 24 bit address into a variable and then writing a copperlist pointing routine here
+https://github.com/Ozzyboshi/Stage-Swaptro/blob/2fb91880510cfa84159e977617ddd4a7afb2b255/dec/6.s#L192
+
+As you can see some manual intervention was needed, not everything is fully automated even if I am sure a good AI can help a lot or maybe do the job for you entirely.
+
 ## Memory Map
 
 | File offset | Address | Size | Contents |
