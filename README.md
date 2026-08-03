@@ -10,7 +10,7 @@ According to demozoo.org, the team was:
 - Gin (real name: Mikael Hultén) - Music
 - Orion (also known as VIC) - Text
 
-You can watch it here: https://www.youtube.com/watch?v=uhVpMpvvlGM
+[![Stage-Swaptro](documentation_images/stage-swaptro.png)](https://www.youtube.com/watch?v=uhVpMpvvlGM)
 
 I found the swaptro inside "Velveteen 18", a disk demopack released in the early '90s by the well known group "Sanity".
 
