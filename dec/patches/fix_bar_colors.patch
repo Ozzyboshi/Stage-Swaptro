@@ -1,0 +1,36 @@
+diff --git a/dec/6.s b/dec/6.s
+index 3954801..d7a47d0 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -397,7 +397,13 @@ LAB_4826A:
+ 	CMPI.B	#$00,VHPOSR		;4826a: 0c39000000dff006
+ 	BNE.S	LAB_4826A		;48272: 66f6
+ 	BSR.W	WAITVBLANK		;48274: 610005b8
+-	BSR.W	SUB_483FC		;48278: 61000182
++; FIX: qui l'originale chiamava SUB_483FC (spegne i LED verdi/rossi della
++; barra bassa) a OGNI giro del loop, mentre SUB_48436 che li riaccende sta
++; solo sull'uscita. Risultato: appena finita la stampa i LED della barra
++; bassa si spegnevano e restavano spenti per tutta l'attesa del click.
++; La chiamata e' stata spostata nel ramo d4==16, appaiata a SUB_48436,
++; esattamente come gia' faceva la barra alta con SUB_48470/SUB_484AA.
++	;BSR.W	SUB_483FC		;48278: 61000182
+ 	bsr.w 	SCROLL_CANVAS
+ 	;ADDI.W	#$0028,LAB_4868E	;4827c: 067900280004868e
+ 	;ADDI.W	#$0028,LAB_48696	;48284: 0679002800048696
+@@ -405,12 +411,14 @@ LAB_4826A:
+ 	ADDI.B	#$01,D4			;48294: 06040001
+ 	CMPI.B	#$10,D4			;48298: 0c040010
+ 	BNE.W	LAB_482C2		;4829c: 66000024
+-	BSR.W	SUB_48470		;482a0: 610001ce
++	BSR.W	SUB_483FC		; spegne LED barra bassa
++	BSR.W	SUB_48470		;482a0: 610001ce  spegne LED barra alta
+ 	bsr.w POINT_CANVAS
+ 	;MOVE.W	#$0000,LAB_4868E	;482a4: 33fc00000004868e
+ 	;MOVE.W	#$1b80,LAB_48696	;482ac: 33fc1b8000048696
+ 	;MOVE.W	#$3700,LAB_4869E	;482b4: 33fc37000004869e
+-	BSR.W	SUB_484AA		;482bc: 610001ec
++	BSR.W	SUB_484AA		;482bc: 610001ec  riaccende LED barra alta
++	BSR.W	SUB_48436		; riaccende LED barra bassa
+ 	CLR.B	D4			;482c0: 4204
+ LAB_482C2:
+ 	BSR.W	WAITVBLANK		;482c2: 6100056a
