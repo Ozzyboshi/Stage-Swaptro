@@ -8,3 +8,10 @@ all:
 floppy:
 	exe2adf -i 6_ks13 -a stage-swaptro_13.adf
 
+patch:
+	git apply patches/0001-Fix-colors-in-bottom-bar.patch
+	git apply patches/0002-fix-copperlist-in-first-line-of-canvas.patch
+
+unpatch:
+	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
+	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
