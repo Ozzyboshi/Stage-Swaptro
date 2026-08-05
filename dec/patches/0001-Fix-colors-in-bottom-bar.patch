@@ -1,23 +1,26 @@
+From 7e60ea58c42e70c5af89f6340db5d1b6ef84c0b1 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Wed, 5 Aug 2026 10:15:36 +0200
+Subject: [PATCH] Fix colors in bottom bar
+
+---
+ dec/6.s | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
 diff --git a/dec/6.s b/dec/6.s
-index 3954801..d7a47d0 100644
+index 3954801..465d065 100644
 --- a/dec/6.s
 +++ b/dec/6.s
-@@ -397,7 +397,13 @@ LAB_4826A:
+@@ -397,7 +397,7 @@ LAB_4826A:
  	CMPI.B	#$00,VHPOSR		;4826a: 0c39000000dff006
  	BNE.S	LAB_4826A		;48272: 66f6
  	BSR.W	WAITVBLANK		;48274: 610005b8
 -	BSR.W	SUB_483FC		;48278: 61000182
-+; FIX: qui l'originale chiamava SUB_483FC (spegne i LED verdi/rossi della
-+; barra bassa) a OGNI giro del loop, mentre SUB_48436 che li riaccende sta
-+; solo sull'uscita. Risultato: appena finita la stampa i LED della barra
-+; bassa si spegnevano e restavano spenti per tutta l'attesa del click.
-+; La chiamata e' stata spostata nel ramo d4==16, appaiata a SUB_48436,
-+; esattamente come gia' faceva la barra alta con SUB_48470/SUB_484AA.
 +	;BSR.W	SUB_483FC		;48278: 61000182
  	bsr.w 	SCROLL_CANVAS
  	;ADDI.W	#$0028,LAB_4868E	;4827c: 067900280004868e
  	;ADDI.W	#$0028,LAB_48696	;48284: 0679002800048696
-@@ -405,12 +411,14 @@ LAB_4826A:
+@@ -405,12 +405,14 @@ LAB_4826A:
  	ADDI.B	#$01,D4			;48294: 06040001
  	CMPI.B	#$10,D4			;48298: 0c040010
  	BNE.W	LAB_482C2		;4829c: 66000024
@@ -34,3 +37,13 @@ index 3954801..d7a47d0 100644
  	CLR.B	D4			;482c0: 4204
  LAB_482C2:
  	BSR.W	WAITVBLANK		;482c2: 6100056a
+@@ -2988,4 +2990,4 @@ BITPLANES:
+ 	SECTION	"CODE2",CODE_C
+ MOD:
+ 	incbin "data_34000_to_48000.bin"
+-	END
+\ No newline at end of file
++	END
+-- 
+2.43.0
+
