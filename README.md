@@ -117,6 +117,33 @@ https://github.com/Ozzyboshi/Stage-Swaptro/blob/2fb91880510cfa84159e977617ddd4a7
 
 As you can see some manual intervention was needed, not everything is fully automated even if I am sure a good AI can help a lot or maybe do the job for you entirely.
 
+## Patching
+
+The original executable seems to be written in a hurry and even if it works fine there are some glitches.
+In my reverse engeneering I wanted also to preserve these glitches since they are part of history, however I also want a patched version.
+For this reason i created a dec/patched directory.
+The following patches where created:
+- 0001-Fix-colors-in-bottom-bar.patch: in each page, when the text is finished, for some reason the colors in the bottom bar are turned into black.
+  I am not sure to understand how it should work and what the coder was trying to achieve but leaving the behaviour like this it seemed a bug.
+  This patches just waits for the user left mouse button press to change colors on both bars, seems more pleasant to me.
+- 0002-fix-copperlist-in-first-line-of-canvas.patch: the first pixels on the first line of the canvas (the section of the screen with background moving) have wrong colors.
+  This is caused by bad timings in copperlist which is too slow to change every color register in time, this results in wrong color applied. This fix just changes the copperlist
+  so that right colors are in place when start displaying the canvas.
+
+The patches are applied using ```make patch``` and ```make unpatch``` commands, you can see here the commands:
+https://github.com/Ozzyboshi/Stage-Swaptro/blob/a551c59208949268f2f6e5bacda992bc4c087a2b/dec/Makefile#L11
+
+What it does it applies using git apply (add -R to remove the patch) in the chronological order (the order is important, you have to apply from the oldest to the newer and de-apply from the newer to the older, like a stack).
+To build a new patch I used git using the following procedure:
+- Create a new branch (git checkout -b profiler)
+- Do changes
+- Create commit (git commit -am "Profiler")
+- Export the patch (git format-patch -1 HEAD)
+- The patch file should be created at this point for example "0001-Profiler.patch"
+- Return to master branch and copy the previously created patch file from the profiler branch under the dec/patches directory
+- Add the patch file to the list inside the makefile patch: directive (at the bottom) with git apply <name of file>
+- Add the patch file to the list inside the makefie unpatch: directive (at the top) with git apply -R <name of file>
+
 ## Memory Map
 
 | File offset | Address | Size | Contents |
