@@ -13,8 +13,11 @@ patch:
 	git apply patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 
 patchozzyversion: patch
-	git apply patches/0003-ozzy-version.patch
+	git apply ozzyversion/patches/0003-ozzy-version.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
+
+unpatchozzyversion: unpatch
+	git apply -R ozzyversion/patches/0003-ozzy-version.patch
