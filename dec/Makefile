@@ -15,12 +15,14 @@ patch:
 patchozzyversion: patch
 	git apply ozzyversion/patches/0001-stage-logo-defaced-by-resistance.patch
 	git apply ozzyversion/patches/0002-adjust-copperlist-color-for-resistance-image.patch
+	git apply ozzyversion/patches/0003-new-patch-for-swapping-color-zero-with-color-15-in-r.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
 
 unpatchozzyversion:
+	git apply -R ozzyversion/patches/0003-new-patch-for-swapping-color-zero-with-color-15-in-r.patch
 	git apply -R ozzyversion/patches/0002-adjust-copperlist-color-for-resistance-image.patch
 	git apply -R ozzyversion/patches/0001-stage-logo-defaced-by-resistance.patch
 	$(MAKE) unpatch
