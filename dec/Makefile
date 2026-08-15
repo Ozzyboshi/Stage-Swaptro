@@ -14,6 +14,7 @@ patch:
 
 patchludoversion: patch
 	git apply ludoversion/patches/0001-up-banner-redone.patch
+	git apply ludoversion/patches/0002-ludovica-banner-down-implemented.patch
 
 patchozzyversion: patch
 	git apply ozzyversion/patches/0001-stage-logo-defaced-by-resistance.patch
@@ -31,5 +32,6 @@ unpatchozzyversion:
 	$(MAKE) unpatch
 
 unpatchludoversion:
+	git apply -R ludoversion/patches/0002-ludovica-banner-down-implemented.patch
 	git apply -R ludoversion/patches/0001-up-banner-redone.patch
 	$(MAKE) unpatch
