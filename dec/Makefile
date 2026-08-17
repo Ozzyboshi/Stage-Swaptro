@@ -19,6 +19,9 @@ patchludoversion: patch
 patchresistanceversion: patch
 	git apply resistanceversion/patches/0001-resistance-logo-added.patch
 
+patchcarloversion: patch
+	git apply carloversion/patches/0001-add-carlo-banners.patch
+
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -30,4 +33,8 @@ unpatchresistanceversion:
 unpatchludoversion:
 	git apply -R ludoversion/patches/0002-ludovica-banner-down-implemented.patch
 	git apply -R ludoversion/patches/0001-up-banner-redone.patch
+	$(MAKE) unpatch
+
+unpatchcarloversion:
+	git apply -R carloversion/patches/0001-add-carlo-banners.patch
 	$(MAKE) unpatch

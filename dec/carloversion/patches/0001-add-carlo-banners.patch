@@ -1,0 +1,347 @@
+From 1fad172484cdd8718b2770836d000f1b95015533 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Mon, 17 Aug 2026 17:59:12 +0200
+Subject: [PATCH] add carlo banners
+
+---
+ dec/6.s | 309 ++++++++++++++------------------------------------------
+ 1 file changed, 77 insertions(+), 232 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index c30565d..def531d 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -597,9 +597,9 @@ TITLELOGO_PTR_4_L:
+ BPLPTR_UPPER_BANNER:
+ 	DC.L	$01000200,$6e11fffe,$01004200,$00e00004 ;48614  barra alta: WAIT $6E (era $6F)
+ 	DC.L	$00e2f500,$00e40004,$00e6f668,$00e80004 ;48624
+-	DC.L	$00eaf7d0,$00ec0004,$00eef938,$01800000 ;48634
+-	DC.L	$01820ccb,$01840a97,$01860775,$01880565 ;48644
+-	DC.L	$018a0354,$018c0243,$018e0132,$01900ffe ;48654
++	DC.L	$00eaf7d0,$00ec0004,$00eef938,$018c0c66,$018e0e66,$01800000 ;48634
++	DC.L	$01820f22,$01840765,$01860a66,$01880886 ;48644
++	DC.L	$018a0432,$018c0c66,$018e0e66,$01900ffe ;48654
+ 	DC.W	$0192			;48664
+ LAB_48666:
+ 	DC.L	$00600194		;48666
+@@ -657,9 +657,10 @@ TEXT_BITPLANE_2_L:
+ BPLPTR_BOTTOM_BANNER:
+ 	DC.L	$420000e0,$000400e2,$fb0000e4,$000400e6 ;48736
+ 	DC.L	$fc4000e8,$000400ea,$fd8000ec,$000400ee ;48746
+-	DC.L	$fec00180,$00000182,$0ccb0184,$0a970186 ;48756
+-	DC.L	$07750188,$0565018a,$0354018c,$0243018e ;48766
+-	DC.L	$01320190,$0ffe0192	;48776
++	;DC.L	$fec00180,$00000182,$0f220184,$07650186 ;48756
++	DC.L	$fec0018c,$0c660182,$0f220184,$07650186 ;48756
++	DC.L	$0a660188,$0886018a,$04320180,$0000018e ;48766
++	DC.L	$0e660190,$0ffe0192	;48776
+ LAB_4877E:
+ 	DC.L	$00600194		;4877e
+ LAB_48782:
+@@ -1441,233 +1442,77 @@ LAB_4A2F0:
+ 
+ 	; UPPER BANNER - raw data start
+ UPPER_BANNER:
+-	DS.L 10
+-	DC.L	$093fe896,$0002afff,$ffffffff,$ffffffb7 ;4f528
+-	DC.L	$f7aa8000,$00900020,$f454aa55,$28000000 ;4f538
+-	DC.L	$d6ac4460		;4f548
+-	DS.L	1			;4f54c
+-	DC.L	$7fff7ffe,$fa415fff,$ffffffff,$fffffbb7 ;4f550
+-	DC.L	$faace337,$e9f2ff82,$a43fffff,$ffbf37ff ;4f560
+-	DC.L	$bdfbffdf,$f9f371ff,$76ed9752,$d505bfff ;4f570
+-	DC.L	$81ffa80a,$f890f5b7,$eab5ff37,$fe97ff55 ;4f580
+-	DC.L	$2a1feff7,$fe8f4bff,$fffe17d9,$59f37395 ;4f590
+-	DC.L	$7870d3fa,$fe97e17d,$baf5ffff,$f890f1b7 ;4f5a0
+-	DC.L	$aac7eb37,$e9f2ff14,$553fbfdf,$ef6fb7fe ;4f5b0
+-	DC.L	$73e4f73a,$b97373ab,$70e1c3ba,$f480c1bb ;4f5c0
+-	DC.L	$7cf00015,$ffffffb7,$ab5fc1f7,$fe97fda7 ;4f5d0
+-	DC.L	$52bfbfdf,$ee9f7bfc,$e7c9ee7d,$39fb73d3 ;4f5e0
+-	DC.L	$7972c3fe,$d50af028,$6c002803,$ffffff87 ;4f5f0
+-	DC.L	$04bfe35f,$e9f2ff30,$a59feff7,$ff2f7ffd ;4f600
+-	DC.L	$efd2dcf9,$59fb7395,$fffffff8,$e005ffff ;4f610
+-	DC.L	$ffff97ff,$50057fff,$037fc023,$ffffff76 ;4f620
+-	DC.L	$8b3fbfdf,$ef9ffbf7,$bf7ffdfc,$997253c9 ;4f630
+-	DC.L	$ffffffff,$ffe2e25b,$ffe90800 ;4f640
+-	DS.L	1			;4f64c
+-	DC.L	$04ffc306,$000000b5,$f9576bb5,$dfff4fff ;4f650
+-	DC.L	$fffff3ff,$fdfffdff	;4f660
+-	DS.L	$A			;4f668
+-	DC.L	$00000001,$fffe5000	;4f690
+-	DS.L	1			;4f698
+-	DC.L	$00000a78,$099d7fff,$ff0fffea,$f54ba5d2 ;4f69c
+-	DC.L	$efffffff,$6b1783bf,$ffffffff,$7fff8001 ;4f6ac
+-	DC.L	$fa40bfff,$ffffffff,$fffffbb7,$fe77ffff ;4f6bc
+-	DC.L	$e7fcffab,$1c9fafd7,$eeaf37fe,$f7efff7f ;4f6cc
+-	DC.L	$fafdafff,$71e3cfb9,$cd057fff,$81ff980c ;4f6dc
+-	DC.L	$fffff5b7,$f9dbffff,$ff0fff66,$19bfbfdf ;4f6ec
+-	DC.L	$ed574ffd,$6bd7f6be,$da8daded,$776ecfb9 ;4f6fc
+-	DC.L	$ff0feafe,$7c99ffff,$fffff1b7,$e77ff3ff ;4f70c
+-	DC.L	$e7fcfe98,$325feff7,$fe2f03fa,$d7afe578 ;4f71c
+-	DC.L	$fafdad8f,$7f7ef7f9,$f480d27c,$fe900019 ;4f72c
+-	DC.L	$ffffffb7,$9dbfe3ff,$ff0ffd38,$ccdfeff7 ;4f73c
+-	DC.L	$ff5fcbf5,$af5fcafb,$ba0dadbb,$78f1c7f9 ;4f74c
+-	DC.L	$cd0b7fc7,$83ff6fff,$ffffffb7,$a97fc19f ;4f75c
+-	DC.L	$e7fcfebf,$997fbfdf,$ed87cbeb,$5ebe15ff ;4f76c
+-	DC.L	$3a0dadf3,$ffffffff,$fffcbfff,$ffffb7ff ;4f77c
+-	DC.L	$30067fff,$aaffc307,$ffffff26,$729feff7 ;4f78c
+-	DC.L	$fecf4fde,$fdffebfd,$dafdaddd ;4f79c
+-	DS.L	1			;4f7a8
+-	DC.L	$00024000,$00001800	;4f7ac
+-	DS.L	1			;4f7b4
+-	DC.L	$2fffc222,$00000096,$0570f87c,$3fff4fbd ;4f7b8
+-	DC.L	$fbffdfff,$fe0001ff	;4f7c8
+-	DS.L	$B			;4f7d0
+-	DC.L	$0001e000		;4f7fc
+-	DS.L	1			;4f800
+-	DC.L	$00000478,$007e0000,$0000001b,$0b804020 ;4f804
+-	DC.L	$10000000,$c60c0060	;4f814
+-	DS.L	2			;4f81c
+-	DC.L	$05bfc000		;4f824
+-	DS.L	1			;4f828
+-	DC.L	$00000430,$01f80000,$1fff006c,$03c04020 ;4f82c
+-	DC.L	$11b08001,$8c1800c0,$06fdac00 ;4f83c
+-	DS.L	1			;4f848
+-	DC.L	$3d058000,$7e00780f,$00000030,$07e00000 ;4f84c
+-	DC.L	$000000f8,$07c04020,$13d8b003,$18300983 ;4f85c
+-	DC.L	$c68dac3c,$00810800,$00001afe,$7c7e0000 ;4f86c
+-	DC.L	$00000030,$1f803c00,$1fff01e0,$0fc04020 ;4f87c
+-	DC.L	$1378f806,$30601b02,$06fdac20,$00810000 ;4f88c
+-	DC.L	$0b7f327c,$fe60001e,$00000030,$7e002000 ;4f89c
+-	DC.L	$000003c0,$3f404020,$13e8b00c,$60c03602 ;4f8ac
+-	DC.L	$460dac24,$078f2000,$3d0b8000,$0000f000 ;4f8bc
+-	DC.L	$00000030,$6e0021e0,$1fff01c0,$7ec04020 ;4f8cc
+-	DC.L	$13d8b018,$c181ec00,$c60dac0c ;4f8dc
+-	DS.L	1			;4f8e8
+-	DC.L	$0003c000,$00007800,$f0078000,$6c002110 ;4f8ec
+-	DC.L	$000000f9,$fdc04020,$11d0b031,$83001800 ;4f8fc
+-	DC.L	$06fdac00,$ffffffff,$fffdffff,$ffffffff ;4f90c
+-	DC.L	$ffffffff,$e8002111,$ffffff77,$fd8fc7e3 ;4f91c
+-	DC.L	$f000b063,$06003000	;4f92c
+-	DS.L	$B			;4f934
+-	DC.L	$f6c01768		;4f960
+-	DS.L	2			;4f964
+-	DC.L	$00000e78		;4f96c
+-	DS.L	1			;4f970
+-	DC.L	$00600000,$00201008	;4f974
+-	DS.L	1			;4f97c
+-	DC.L	$00403800		;4f980
+-	DS.L	1			;4f984
+-	DC.L	$80000000		;4f988
+-	DS.L	2			;4f98c
+-	DC.L	$00000e30		;4f994
+-	DS.L	1			;4f998
+-	DC.L	$03f80000,$40000000,$00003000 ;4f99c
+-	DS.L	1			;4f9a8
+-	DC.L	$01fb7000,$88102004	;4f9ac
+-	DS.L	2			;4f9b4
+-	DC.L	$00000430		;4f9bc
+-	DS.L	1			;4f9c0
+-	DC.L	$00600000,$c0000000,$00007800 ;4f9c4
+-	DS.L	1			;4f9d0
+-	DC.L	$01f37000,$80002004,$006001ff,$fee00000 ;4f9d4
+-	DC.L	$00000030		;4f9e4
+-	DS.L	1			;4f9e8
+-	DC.L	$03f80003,$80000000,$00807801,$08100085 ;4f9ec
+-	DC.L	$61fb7056,$80000004,$000001ff,$fef00000 ;4f9fc
+-	DC.L	$00000030		;4fa0c
+-	DS.L	1			;4fa10
+-	DC.L	$00600000		;4fa14
+-	DS.L	1			;4fa18
+-	DC.L	$00007c02,$10200100,$e1fb700e,$80000000 ;4fa1c
+-	DC.L	$00000010,$10000000,$00000030 ;4fa2c
+-	DS.L	1			;4fa38
+-	DC.L	$03f80000		;4fa3c
+-	DS.L	1			;4fa40
+-	DC.L	$00007800,$00000203,$e1fb703e ;4fa44
+-	DS.L	7			;4fa50
+-	DC.L	$00007800,$00000001,$c1fb701c ;4fa6c
+-	DS.L	7			;4fa78
+-	DC.L	$00007800		;4fa94
+-	DS.L	1			;4fa98
+-	DC.L	$00000200		;4fa9c
+-	DS.L	$18			;4faa0
++	; Bitplane 0:
++	dc.l $ffcec100,$00fcff03,$80000000,$0710400c,$301d83ff,$ce43cfef,$c0000002,$0ff9ffd9,$fa27056e,$0e0ffbe1 ;row 0
++	dc.l $ffee4305,$8068ff01,$80000000,$07100200,$187c8fff,$8643ffc8,$0000007c,$0ffdfe01,$fc3e00ac,$1e07c303 ;row 1
++	dc.l $fffe0347,$40b84740,$00000000,$07d80300,$1dcc4ffe,$00467fc0,$0000043e,$0fcdfe1f,$fe19e060,$3c03c007 ;row 2
++	dc.l $ffff4fc8,$60c621c0,$00100000,$03fc7fc0,$3d9c5ffd,$81fc466e,$00001c3c,$07e5ff0f,$ff0de140,$3e03c30f ;row 3
++	dc.l $ffffcfc8,$762601c0,$00160000,$007e4fe3,$f7b271fb,$00f845ec,$00000c38,$07e857df,$ff0c005c,$7e00c77f ;row 4
++	dc.l $ffffffd9,$ff3f0330,$003f05e0,$0021bfff,$f1c403e7,$00182ff4,$18000470,$00f9de5f,$fe5a817e,$7fc00ffc ;row 5
++	dc.l $fffff9da,$ff278e3c,$8067ffe7,$0003bd1f,$c7e83b8b,$f0001780,$1000000b,$00fff89f,$fe7c41ff,$e7c07ff0 ;row 6
++	dc.l $fffffd91,$7f078f8f,$810ffffc,$000ff807,$ff80386f,$fe0012c0,$00000002,$007fe203,$fffe202f,$c7f0fc00 ;row 7
++	dc.l $fffffc1c,$ff87e584,$01fffb7f,$043dfb07,$8e00f8df,$fe000a00,$00000000,$00fff738,$ffb60407,$c7f0fc00 ;row 8; Bitplane 1:
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 0
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 1
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 2
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 3
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 4
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 5
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 6
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 7
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 8; Bitplane 2:
++	dc.l $fffffffd,$fdf03000,$00000000,$00efffff,$cfe07fff,$efbc3000,$00000000,$0007f83f,$fffffa9f,$f1fffffe ;row 0
++	dc.l $fffffffa,$7ff06000,$00000000,$00effdff,$e7807fff,$f7bc0000,$00000c00,$0003f5ff,$ffffff5f,$e1fffffc ;row 1
++	dc.l $ffffffe8,$f7403000,$00000000,$0027fcff,$e2303fff,$ffb98000,$00001800,$0033f9ff,$ffffff9f,$c3fffff8 ;row 2
++	dc.l $fffffff1,$ff001000,$00000000,$0003803f,$c2603ffe,$7e03b800,$00000000,$003bf0ff,$fffffebf,$c1fffcf0 ;row 3
++	dc.l $fffffff3,$ffd80000,$00000000,$0001b01c,$00401ff8,$ff07b800,$00000000,$0017a83f,$ffffffa3,$81fff880 ;row 4
++	dc.l $ffffffe3,$ffc000c0,$00300000,$00004000,$00001ff1,$ffe7d000,$00000000,$000621af,$ffff7e81,$803ff000 ;row 5
++	dc.l $ffffffe1,$ffd801c0,$00780000,$00004000,$000007e7,$ffffe000,$00000000,$00000767,$ffffbe00,$003f8000 ;row 6
++	dc.l $ffffffe0,$fff801f0,$00700180,$00060000,$0000079f,$ffffe400,$00000000,$00009dff,$ffffdf90,$000f0000 ;row 7
++	dc.l $ffffffe0,$7ff8037b,$c0000780,$000e00c0,$000007bf,$fffff000,$00000000,$00000cff,$ffffff98,$000f0000 ;row 8; Bitplane 3:
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 0
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 1
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 2
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 3
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 4
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 5
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 6
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 7
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 8
+ BOTTOM_BANNER:
+-	DC.L	$093fe896,$0002afff,$ffffffff,$ffffffb7 ;4fb00
+-	DC.L	$f7aa8000,$00900020,$f454aa55,$28000000 ;4fb10
+-	DC.L	$d6ac4460,$00000078,$7fff7ffe,$fa415fff ;4fb20
+-	DC.L	$ffffffff,$fffffbb7,$faace337,$e9f2ff82 ;4fb30
+-	DC.L	$a43fffff,$ffbf37ff,$bdfbffdf,$d3592efe ;4fb40
+-	DC.L	$76ed9752,$d505bfff,$81ffa80a,$f890f5b7 ;4fb50
+-	DC.L	$eab5ff37,$fe97ff55,$2a1feff7,$fe8f4bff ;4fb60
+-	DC.L	$fffe17df,$8e28907c,$7870d3fa,$fe97e17c ;4fb70
+-	DC.L	$baf5ffff,$f890f1b7,$aac7eb37,$e9f2ff14 ;4fb80
+-	DC.L	$55bfbfdf,$ef6fb7fe,$73e4f73f,$8b69847c ;4fb90
+-	DC.L	$70e1c3ba,$f480c1ba,$7cf00015,$ffffffb7 ;4fba0
+-	DC.L	$ab5fc1f7,$fe97fda7,$523fbfdf,$ee9f7bfc ;4fbb0
+-	DC.L	$e7c9ee7f,$8e6984fc,$7972c3fe,$d50af028 ;4fbc0
+-	DC.L	$44002803,$ffffff87,$04bfe35f,$e9f2ff30 ;4fbd0
+-	DC.L	$a49feff7,$ff2f7ffd,$efd2dcff,$db6da47c ;4fbe0
+-	DC.L	$fffffff8,$e005ffff,$ffff97ff,$50057fff ;4fbf0
+-	DC.L	$037fc023,$ffffff76,$ab3fbfdf,$ef9ffbf7 ;4fc00
+-	DC.L	$bf7ffdff,$800000fc,$ffffffff,$ffe2e25b ;4fc10
+-	DC.L	$ffe90800		;4fc20
+-	DS.L	1			;4fc24
+-	DC.L	$04ffc306,$000000b5,$f9576bb5,$dfff4fff ;4fc28
+-	DC.L	$fffff349,$fffffff8,$00000001,$fffe5000 ;4fc38
+-	DS.L	1			;4fc48
+-	DC.L	$00000a78,$099d7fff,$ff0fffea,$f54ba5d2 ;4fc4c
+-	DC.L	$efffffff,$6b1783bf,$c0000006,$7fff8001 ;4fc5c
+-	DC.L	$fa40bfff,$ffffffff,$fffffbb7,$fe77ffff ;4fc6c
+-	DC.L	$e7fcffab,$1c9fafd7,$eeaf37fe,$f7efff7f ;4fc7c
+-	DC.L	$cb3c9e7e,$71e3cfb9,$cd057fff,$81ff980c ;4fc8c
+-	DC.L	$fffff5b7,$f9dbffff,$ff0fff66,$193fbfdf ;4fc9c
+-	DC.L	$ed574ffd,$6bd7f6bf,$9e6998fc,$776ecfb9 ;4fcac
+-	DC.L	$ff0feaff,$7c99ffff,$fffff1b7,$e77ff3ff ;4fcbc
+-	DC.L	$e7fcfe98,$32dfeff7,$fe2f03fa,$d7afe57f ;4fccc
+-	DC.L	$9f7daefc,$7f7ef7f9,$f480d27d,$fe900019 ;4fcdc
+-	DC.L	$ffffffb7,$9dbfe3ff,$ff0ffd38,$cddfeff7 ;4fcec
+-	DC.L	$ff5fcbf5,$af5fcaff,$9e6984fc,$78f1c7f9 ;4fcfc
+-	DC.L	$cd0b7fc7,$83ff6fff,$ffffffb7,$a97fc19f ;4fd0c
+-	DC.L	$e7fcfebf,$9a7fbfdf,$ed87cbeb,$5ebe15ff ;4fd1c
+-	DC.L	$9b6dbe7c,$ffffffff,$fffcbfff,$ffffb7ff ;4fd2c
+-	DC.L	$30067fff,$aaffc307,$ffffff26,$4e9feff7 ;4fd3c
+-	DC.L	$fecf4fde,$fdffebff,$c000007c ;4fd4c
+-	DS.L	1			;4fd58
+-	DC.L	$00024000,$00001800	;4fd5c
+-	DS.L	1			;4fd64
+-	DC.L	$2fffc222,$00000096,$0570f87c,$3fff4fbd ;4fd68
+-	DC.L	$fbffdf48,$fffffff8	;4fd78
+-	DS.L	1			;4fd80
+-	DC.L	$0001e000		;4fd84
+-	DS.L	1			;4fd88
+-	DC.L	$00000478,$007e0000,$0000001b,$0b804020 ;4fd8c
+-	DC.L	$10000000,$c60c0060	;4fd9c
+-	DS.L	2			;4fda4
+-	DC.L	$05bfc000		;4fdac
+-	DS.L	1			;4fdb0
+-	DC.L	$00000430,$01f80000,$1fff006c,$03c04020 ;4fdb4
+-	DC.L	$11b08001,$8c1800c0,$00040000 ;4fdc4
+-	DS.L	1			;4fdd0
+-	DC.L	$3d058000,$7e00780f,$00000030,$07e00000 ;4fdd4
+-	DC.L	$000000f8,$07c04020,$13d8b003,$18300980 ;4fde4
+-	DC.L	$45042802,$00810800,$00001aff,$7c7e0000 ;4fdf4
+-	DC.L	$00000030,$1f803c00,$1fff01e0,$0f404020 ;4fe04
+-	DC.L	$1378f806,$30601b00,$41043202,$00810000 ;4fe14
+-	DC.L	$0b7f327d,$fe60001e,$00000030,$7e002000 ;4fe24
+-	DC.L	$000003c0,$3e404020,$13e8b00c,$60c03600 ;4fe34
+-	DC.L	$45040202,$078f2000,$3d0b8000,$0000f000 ;4fe44
+-	DC.L	$00000030,$6e0021e0,$1fff01c0,$7cc04020 ;4fe54
+-	DC.L	$13d8b018,$c181ec00,$40000282 ;4fe64
+-	DS.L	1			;4fe70
+-	DC.L	$0003c000,$00007800,$f0078000,$6c002110 ;4fe74
+-	DC.L	$000000f9,$f1c04020,$11d0b031,$83001800 ;4fe84
+-	DC.L	$40000082,$ffffffff,$fffdffff,$ffffffff ;4fe94
+-	DC.L	$ffffffff,$e8002111,$ffffff77,$fd8fc7e3 ;4fea4
+-	DC.L	$f000b063,$060030b7,$00000006,$f6c01768 ;4feb4
+-	DS.L	2			;4fec4
+-	DC.L	$00000e78		;4fecc
+-	DS.L	1			;4fed0
+-	DC.L	$00600000,$00201008	;4fed4
+-	DS.L	1			;4fedc
+-	DC.L	$00403800,$00000080,$80000000 ;4fee0
+-	DS.L	2			;4feec
+-	DC.L	$00000e30		;4fef4
+-	DS.L	1			;4fef8
+-	DC.L	$03f80000,$40000000,$00003000 ;4fefc
+-	DS.L	2			;4ff08
+-	DC.L	$88102004		;4ff10
+-	DS.L	2			;4ff14
+-	DC.L	$00000430		;4ff1c
+-	DS.L	1			;4ff20
+-	DC.L	$00600000,$c0000000,$00007800 ;4ff24
+-	DS.L	2			;4ff30
+-	DC.L	$80002004,$006001fe,$fee00000,$00000030 ;4ff38
+-	DS.L	1			;4ff48
+-	DC.L	$03f80003,$80000000,$00807801,$08100080 ;4ff4c
+-	DS.L	1			;4ff5c
+-	DC.L	$80000004,$000001fe,$fef00000,$00000030 ;4ff60
+-	DS.L	1			;4ff70
+-	DC.L	$00600000		;4ff74
+-	DS.L	1			;4ff78
+-	DC.L	$00007c02,$10200100	;4ff7c
+-	DS.L	1			;4ff84
+-	DC.L	$80000000,$00000010,$38000000,$00000030 ;4ff88
+-	DS.L	1			;4ff98
+-	DC.L	$03f80000,$01000000,$00007800,$00000200 ;4ff9c
+-	DS.L	8			;4ffac
+-	DC.L	$00007800		;4ffcc
+-	DS.L	9			;4ffd0
+-	DC.L	$00007800		;4fff4
+-	DS.L	2			;4fff8
++	; Bitplane 0:
++	dc.l $b80013ff,$fcc02796,$3f9feb72,$e7ffffff,$fc002d8e,$0fc01fc0,$003e0007,$e00f41c6,$d000ffff,$41a5c000 ;row 0
++	dc.l $b08000f4,$17800198,$1f9ff37e,$63ffffff,$f80c397f,$3bc07f80,$000a0003,$f80f63fa,$70c07ffe,$3c14cc00 ;row 1
++	dc.l $4fc00000,$1d000070,$0d8dc07e,$707fffff,$fb1bd8f9,$398bff00,$00040003,$ff46627c,$6f607fff,$09d00c80 ;row 2
++	dc.l $c7f80000,$01000070,$8c60c27c,$41ffffff,$d103ccfc,$e81ffc60,$00040018,$ffe044fc,$cf002fff,$c0281c80 ;row 3
++	dc.l $037c0000,$0000004c,$43a05d58,$0c7ffef3,$c810bdfc,$81ff1068,$00000058,$23e004fe,$f0004f3c,$481038c0 ;row 4
++	dc.l $011c0000,$0000301f,$e2c0341c,$4a3ffe07,$e8307bfc,$043e1007,$10000380,$21e000ff,$78005f80,$de1811c8 ;row 5
++	dc.l $411c0000,$0000181f,$e7e80814,$5d3dfe06,$376c7bfe,$c49c100e,$180001c0,$20e48dff,$78c83181,$9f7501d4 ;row 6
++	dc.l $e11e0000,$00010e1f,$73c60118,$dfb9ff1f,$a2e8f3f9,$efdc781e,$1c0001e0,$78eede7f,$3c4c17e3,$bf3c0100 ;row 7; Bitplane 1:
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 0
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 1
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 2
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 3
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 4
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 5
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 6
++	dc.l $ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff,$ffffffff ;row 7; Bitplane 2:
++	dc.l $40000000,$03c00060,$007ff0ff,$ffffffff,$ffffffff,$f3ffe020,$00000018,$1fff7fff,$ffffffff,$ff600000 ;row 0
++	dc.l $40000000,$01800060,$007ff8ff,$ffffffff,$ffffffff,$c7ff8040,$00100008,$07ffffff,$ffffffff,$ffa00000 ;row 1
++	dc.l $b0000000,$00000000,$007ff9ff,$ffffffff,$fcffffff,$c7f40000,$00080000,$00bfffff,$ffffffff,$f8201000 ;row 2
++	dc.l $38000000,$00000001,$001ff1ff,$ffffffff,$feffbfff,$17e00000,$00000000,$001fffff,$ffffffff,$fd802000 ;row 3
++	dc.l $fc800000,$00000001,$805de2ff,$f3ffffff,$ffef7fff,$7e002000,$00000000,$101fffff,$ffffffff,$ffc00000 ;row 4
++	dc.l $fee00000,$00000000,$c1ffcbfb,$f9ffffff,$ffcfffff,$fbc06000,$00000000,$181fffff,$ffffffff,$ff800000 ;row 5
++	dc.l $fee00000,$00000001,$81f7f7f3,$fcffffff,$f8dfffff,$fbe0e000,$00000000,$1c1fffff,$ffffffff,$ff800000 ;row 6
++	dc.l $fee00000,$00000003,$c7f9fee7,$fe7fffff,$fddffffe,$f1e08000,$00000000,$041fffff,$ffffffff,$ffc00000 ;row 7; Bitplane 3:
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 0
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 1
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 2
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 3
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 4
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 5
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 6
++	dc.l $00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000,$00000000 ;row 7
+ CANVAS_RAW_DATA:
+ 	DC.L	$40044004,$40044004,$40044004,$40044004 ;50000
+ 	DC.L	$40044004,$40044004,$40044004,$40044004 ;50010
+-- 
+2.43.0
+
