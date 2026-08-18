@@ -22,6 +22,7 @@ patchresistanceversion: patch
 patchcarloversion: patch
 	git apply carloversion/patches/0001-add-carlo-banners.patch
 	git apply carloversion/patches/0002-canvas-with-skull.patch
+	git apply carloversion/patches/0003-resistance-logo-added.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
@@ -39,4 +40,5 @@ unpatchludoversion:
 unpatchcarloversion:
 	git apply -R carloversion/patches/0002-canvas-with-skull.patch
 	git apply -R carloversion/patches/0001-add-carlo-banners.patch
+	git apply -R carloversion/patches/0003-resistance-logo-added.patch
 	$(MAKE) unpatch
