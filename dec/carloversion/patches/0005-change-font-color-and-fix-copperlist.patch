@@ -1,0 +1,94 @@
+From 167e60c19d4032af82fe1cf2742c8958910655a2 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Wed, 19 Aug 2026 12:06:22 +0200
+Subject: [PATCH] change font color and fix copperlist
+
+---
+ dec/6.s | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index aad2276..7810b34 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -614,8 +614,8 @@ LAB_4867E:
+ 	DC.L	$01000200		; BPLCON0 = 0 piani -> riga nera di servizio
+ 	DC.L	$01800000,$01820823,$01840765,$01860a66
+ 	DC.L	$01880886,$018a0432,$018c0c66,$018e0e66
+-	DC.L	$01900777,$01920aab,$01940ddd,$01960fff
+-	DC.L	$01980aaa,$019a0fff,$019c099a,$019e0fff
++	DC.L	$01900fff,$01920fff,$01940fff,$01960fff	; testo bianco su ogni fondo
++	DC.L	$01980fff,$019a0fff,$019c0fff,$019e0fff
+ 	DC.L	$01a00aaa,$01a20d0e,$01a40fbf,$01a60fef
+ 	DC.L	$01a80ddd,$01aa0fff,$01ac0c0d,$01ae0fcf
+ 	DC.L	$01b00fff,$01b20fff,$01b40fff,$01b60fff
+@@ -647,15 +647,12 @@ TEXT_BITPLANE_2_H:
+ 	DC.L	$000700f2
+ TEXT_BITPLANE_2_L:
+ 	DC.W	$2800			;486a6
+-	DC.L	$f611fffe		; WAIT riga $F6
+-	DC.W	$0100
+-BPLPTR_BOTTOM_BANNER:
+-	DC.L	$420000e0,$000400e2,$fb0000e4,$000400e6 ;48736
+-	DC.L	$fc4000e8,$000400ea,$fd8000ec,$000400ee ;48746
+-	;DC.L	$fec00180,$00000182,$0f220184,$07650186 ;48756
+-	DC.L	$fec0018c,$0c660182,$0f220184,$07650186 ;48756
+-	DC.L	$0a660188,$0886018a,$04320180,$0000018e ;48766
+-	DC.L	$0e660190,$0ffe0192	;48776
++	DC.L	$f511fffe		; NUOVO: WAIT riga $F5
++	DC.L	$01000200		; BPLCON0 = 0 piani -> riga nera di stacco
++	DC.L	$01800000,$01820f22,$01840765,$01860a66
++	DC.L	$01880886,$018a0432,$018c0c66,$018e0e66
++	DC.L	$01900ffe
++	DC.W	$0192
+ LAB_4877E:
+ 	DC.L	$00600194		;4877e
+ LAB_48782:
+@@ -669,9 +666,17 @@ LAB_4878E:
+ LAB_48792:
+ 	DC.L	$0080019e		;48792
+ LAB_48796:
+-	DC.L	$00f0fe11		;48796
+-	DC.L	$fffe0100		; WAIT $FE + registro BPLCON0
+-	DC.L	$02000180,$00000182,$00000184	; BPLCON0=0 piani, poi i colori a zero
++	DC.W	$00f0
++	DC.L	$f611fffe		; WAIT riga $F6
++	DC.W	$0100
++BPLPTR_BOTTOM_BANNER:
++	DC.W	$4200
++	DC.L	$00e00004,$00e2fb00,$00e40004,$00e6fc40
++	DC.L	$00e80004,$00eafd80,$00ec0004,$00eefec0
++	DC.L	$fe11fffe		; WAIT riga $FE
++	DC.L	$01000200		; BPLCON0 = 0 piani
++	DC.L	$01800000,$01820000
++	DC.W	$0184
+ 	DC.L	$00000186,$00000188,$0000018a,$0000018c ;487a6
+ 	DC.L	$0000018e,$00000190,$00000192,$00000194 ;487b6
+ 	DC.L	$00000196,$00000198,$0000019a,$0000019c ;487c6
+@@ -860,7 +865,7 @@ STAGE7:
+ 	dc.b	"   I LEARNED FROM THEIRS.               "
+ 	dc.b	0
+ 
+-; ---------------- STAGE8: 16 righe ----------------
++; ---------------- STAGE8: 15 righe ----------------
+ STAGE8:
+ 	dc.b	"                                        "
+ 	dc.b	"             z GREETINGS x              "
+@@ -876,7 +881,6 @@ STAGE8:
+ 	dc.b	"   MY ADDRESS IS ON THE DISK LABEL.     "
+ 	dc.b	"   IF YOU GOT THIS AS A COPY, ASK THE   "
+ 	dc.b	"   FRIEND WHO GAVE IT TO YOU.           "
+-	dc.b	"                                        "
+ 	dc.b	"      COPY THIS DISK.  PASS IT ON.      "
+ 	dc.b	0
+ 
+@@ -2021,4 +2025,4 @@ BITPLANES:
+ 	SECTION	"CODE2",CODE_C
+ MOD:
+ 	incbin "data_34000_to_48000.bin"
+-	END
++	END
+\ No newline at end of file
+-- 
+2.43.0
+
