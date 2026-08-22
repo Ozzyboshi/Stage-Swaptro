@@ -150,7 +150,7 @@ To build a new patch I used git using the following procedure:
 |---|---|---|---|
 | `$00000` | `$34000` | 5600 | Logo 320×35, 4 bitplanes (planes at +$000/+$578/+$AF0/+$1068) |
 | `$015E0` | `$355E0` | 288 | padding |
-| `$01700` | `$35700` | 74882 | ProTracker module "smells like pop" (16 samples, 18 patterns, songlen 30) |
+| `$01700` | `$35700` | 74882 | ProTracker module "smells like pop" (16 samples, 18 patterns, songlen 30) <br>Music [▶️ Play MOD.smells like pop](https://www.stef.be/bassoontracker/?file=https%3A%2F%2Fraw.githubusercontent.com%2FOzzyboshi%2FStage-Swaptro%2Fmain%2Fdec%2Fassets%2FMOD.smells%20like%20pop) |
 | `$13D82` | `$47D82` | 638 | zero padding |
 | `$14000` | `$48000` | 1252 | **Main code** |
 | `$144E4` | `$484E4` | 764 | Copperlist (terminated by `FFFF FFFE` at `$147DC`) |
