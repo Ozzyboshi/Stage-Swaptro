@@ -1,0 +1,63 @@
+From c7663481c9f0f23020d6e3229b83627699555d07 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Mon, 24 Aug 2026 11:09:26 +0200
+Subject: [PATCH] fix exit with f1
+
+---
+ dec/6.s | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 35a1c2d..3eb5676 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -19,7 +19,7 @@ AUD2VOL	EQU	$DFF0C8
+ AUD3LCH	EQU	$DFF0D0
+ AUD3VOL	EQU	$DFF0D8
+ 
+-; --- tastiera ---
++; --- keyboard ---
+ CIAASDR		EQU	$BFEC01
+ KEY_SPACE	EQU	$40
+ KEY_ESC		EQU	$45
+@@ -428,18 +428,20 @@ LAB_4826A:
+ 	CLR.B	D4			;482c0: 4204
+ LAB_482C2:
+ 	BSR.W	WAITVBLANK		;482c2: 6100056a
+-	BTST	#6,EXT_BFE001		;482c6: 0839000600bfe001
+-	BNE.S	LAB_4826A		;482ce: 669a
++	BSR.W	CHECKKEYS
++	TST.B	KEYACTION
++	BEQ.W	LAB_4826A		;no key pressed, continue
++	CLR.B	KEYACTION
+ 	BSR.W	SUB_48436		;482d0: 61000164
+ 	RTS				;482d4: 4e75
+ SUB_482D6:
+-	MOVEA.L	D0,A0			;482d6: 2040
+-	MOVE.L	OLDCOPPERLIST,$32(A0)	;482d8: 2179000487e00032
+-	MOVEA.L	OLDFGXBASE,A1		;482e0: 2279000487f6
++	MOVEA.L	SYSBASE,A6
++	MOVEA.L	OLDFGXBASE,A0
++	MOVE.L	OLDCOPPERLIST,$32(A0)
++	MOVEA.L	OLDFGXBASE,A1
+ 	JSR	-414(A6)		;482e6: 4eaefe62
+ 	JSR	-138(A6)		;482ea: 4eaeff76
+ 	MOVE.L	OLD_INT3,AUTO_INT3	;482ee: 23f9000488160000006c
+-	;MOVE.L	#$00000420,COP1LCH	;482f8: 23fc0000042000dff080
+ 	MOVE.W	#$8020,DMACON	;48302: 33fc802000dff096
+ 	JSR	SUB_49C6A		;4830a: 4eb900049c6a
+ 	CLR.L	D0			;48310: 4280
+@@ -740,8 +742,8 @@ CHECKKEYS:
+ 	movea.l	MAINSP,a7		; trash stack (put the old one that we had at the beginning)
+ 	bra.w	DEMOEND
+ CK_NOTFUNC:
+-	;cmpi.b	#KEY_SPACE,d0
+-	;beq.s	CK_NEXT
++	cmpi.b	#KEY_SPACE,d0
++	beq.s	CK_NEXT
+ 	cmpi.b	#KEY_ESC,d0
+ 	bne.s	CK_DONE
+ CK_NEXT:
+-- 
+2.43.0
+

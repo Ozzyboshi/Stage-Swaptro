@@ -28,6 +28,7 @@ patchcarloversion: patch
 
 patchitalodisco: patch
 	git apply italodisco/patches/0001-start-of-italodisco.patch
+	git apply italodisco/patches/0002-fix-exit-with-f1.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
@@ -50,6 +51,7 @@ unpatchcarloversion:
 	git apply -R carloversion/patches/0001-add-carlo-banners.patch
 	$(MAKE) unpatch
 
-unpatchitalodisco: patch
+unpatchitalodisco:
+	git apply -R italodisco/patches/0002-fix-exit-with-f1.patch
 	git apply -R italodisco/patches/0001-start-of-italodisco.patch
 	$(MAKE) unpatch
