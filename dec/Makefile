@@ -33,6 +33,7 @@ patchitalodisco: patch
 	git apply italodisco/patches/0004-add-shrinkler-into-makefile.patch
 	git apply italodisco/patches/0005-all-prods-added.patch
 	git apply italodisco/patches/0006-added-THE_OUTSIDER-and-4Ward-BornToRaiseTheHell-93.patch
+	git apply italodisco/patches/0007-added-all-demos-for-italodisco.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
@@ -56,6 +57,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0007-added-all-demos-for-italodisco.patch
 	git apply -R italodisco/patches/0006-added-THE_OUTSIDER-and-4Ward-BornToRaiseTheHell-93.patch
 	git apply -R italodisco/patches/0005-all-prods-added.patch
 	git apply -R italodisco/patches/0004-add-shrinkler-into-makefile.patch
