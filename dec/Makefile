@@ -5,23 +5,8 @@ all:
 	vasmm68k_mot -devpac -nocase -Fhunk   -o ./6ks13.o ./6.s
 	vlink -bamigahunk -o ./6_ks13 -s  ./6ks13.o
 
-	vasmm68k_mot -devpac -nocase -Fhunk   -o ./selector.o ./selector.s
-	vlink -bamigahunk -o ./selector -s  ./selector.o
-
 floppy:
-	mkdir -p compressedtmp
-	Shrinkler --flash DFF180 6_ks13 compressedtmp/6_ks13
-	Shrinkler --flash DFF180 horror13 compressedtmp/horror13
-	Shrinkler --flash DFF180 THE_OUTSIDER compressedtmp/THE_OUTSIDER
-	Shrinkler --flash DFF180 '4Ward-BornToRaiseTheHell - 93' 'compressedtmp/4Ward-BornToRaiseTheHell - 93'
-	Shrinkler --flash DFF180 'Aggressors&Oracle-NewAlleance' 'compressedtmp/Aggressors&Oracle-NewAlleance'
-	Shrinkler --flash DFF180 'Divina-HighTensionNeverBorn' 'compressedtmp/Divina-HighTensionNeverBorn'
-	Shrinkler --flash DFF180 'DreamsOfPower-Born' 'compressedtmp/DreamsOfPower-Born'
-	Shrinkler --flash DFF180 'Insider intro 1989' 'compressedtmp/Insider intro 1989'
-	Shrinkler --flash DFF180 'TRAUMA-FirstDemo 19.05.91' 'compressedtmp/TRAUMA-FirstDemo 19.05.91'
-	Shrinkler --flash DFF180 'VEGA-Plasma1st' 'compressedtmp/VEGA-Plasma1st'
-	gadf -i selector -S startup-sequence compressedtmp/6_ks13 compressedtmp/horror13 compressedtmp/THE_OUTSIDER 'compressedtmp/4Ward-BornToRaiseTheHell - 93' 'compressedtmp/Aggressors&Oracle-NewAlleance' 'compressedtmp/Divina-HighTensionNeverBorn' 'compressedtmp/DreamsOfPower-Born' 'compressedtmp/Insider intro 1989' 'compressedtmp/TRAUMA-FirstDemo 19.05.91' 'compressedtmp/VEGA-Plasma1st'
-	rm -rf compressedtmp
+	exe2adf -i 6_ks13 -a stage-swaptro_13.adf
 
 patch:
 	git apply patches/0001-Fix-colors-in-bottom-bar.patch
