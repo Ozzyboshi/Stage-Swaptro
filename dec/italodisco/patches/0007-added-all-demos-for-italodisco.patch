@@ -1,0 +1,123 @@
+From d40227a3d96929a6a29fbb313dafd9b232ba7f75 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Mon, 24 Aug 2026 23:11:59 +0200
+Subject: [PATCH] added all demos for italodisco
+
+---
+ dec/6.s        | 24 ++++++++++++------------
+ dec/Makefile   |  8 +++++++-
+ dec/selector.s | 18 +++++++++++++++---
+ 3 files changed, 34 insertions(+), 16 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 75e24be..4357074 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -24,7 +24,7 @@ CIAASDR		EQU	$BFEC01
+ KEY_SPACE	EQU	$40
+ KEY_ESC		EQU	$45
+ KEY_F1		EQU	$50		; F1..F10 = $50..$59
+-KEY_F10		EQU	$59
++KEY_F9		EQU	$58
+ 
+ 	SECTION	"CODE",CODE_C
+ 
+@@ -735,7 +735,7 @@ CHECKKEYS:
+ 	andi.b	#$7f,d0
+ 	cmpi.b	#KEY_F1,d0
+ 	blo.s	CK_NOTFUNC
+-	cmpi.b	#KEY_F10,d0
++	cmpi.b	#KEY_F9,d0
+ 	bhi.s	CK_NOTFUNC
+ 	subi.b	#KEY_F1-1,d0		; F1 -> 1 ... F10 -> 10
+ 	move.b	d0,CHOICE
+@@ -799,22 +799,22 @@ LAB_48838:
+ 
+ ; ---------------- STAGE0: page 1, 16 rows ----------------
+ STAGE0:
+-	dc.b	"                                        "	; $4884C
+ 	dc.b	"           TRINITYHQ PRESENTS           "	; $48874
+-	dc.b	"                                        "	; $4889C
+ 	dc.b	"            q--------------w            "	; $488C4
+-	dc.b	"            e              e            "	; $488EC
+ 	dc.b	"            e  ITALODISCO  e            "	; $48914
+ 	dc.b	"            e   VOLUME 3   e            "	; $4893C
+-	dc.b	"            e              e            "	;
+ 	dc.b	"            a--------------s            "	; $48964
+ 	dc.b	"                                        "	; $489B4
+-	dc.b	"            TODAY MENU IS               "	; $489DC
+-	dc.b	"                                        "	; $48A04
+-	dc.b	" F1 -      THREESYSTEM-HORROR-89        "	; $48A2C
+-	dc.b	"                                        "	; $48A54
+-	dc.b	"                                        "	; $48A7C
+-	dc.b	"                                        "	; $48AA4
++	dc.b	" F1 - THREESYSTEM-HORROR-89             "	; $48A2C
++	dc.b	" F2 - THE OUTSIDER                      "	; $48A54
++	dc.b	" F3 - 4WARD-BORNTORAISETHEHELL - 93     "
++	dc.b    " F4 - AGGRESSORS AND ORACLE-NEWALLEANCE "
++	dc.b	" F5 - DIVINA-HIGHTENSIONNEVERBORN       "
++	dc.b    " F6 - DREAMSOFPOWER-BORN                "
++	dc.b    " F7 - INSIDER INTRO 1989                "
++	dc.B    " F8 - TRAUMA-FIRSTDEMO 19-05-91         "
++	dc.b    " F9 - VEGA-PLASMA1ST                    "
++	dc.b	"                                        "	; $4889C
+ 	dc.b	0						; $48ACC  page end
+ 
+ ; ---------------- STAGE1: page 2, 16 rows ----------------
+diff --git a/dec/Makefile b/dec/Makefile
+index c6a8e28..dd01d79 100644
+--- a/dec/Makefile
++++ b/dec/Makefile
+@@ -14,7 +14,13 @@ floppy:
+ 	Shrinkler --flash DFF180 horror13 compressedtmp/horror13
+ 	Shrinkler --flash DFF180 THE_OUTSIDER compressedtmp/THE_OUTSIDER
+ 	Shrinkler --flash DFF180 '4Ward-BornToRaiseTheHell - 93' 'compressedtmp/4Ward-BornToRaiseTheHell - 93'
+-	gadf -i selector -S startup-sequence compressedtmp/6_ks13 compressedtmp/horror13 compressedtmp/THE_OUTSIDER 'compressedtmp/4Ward-BornToRaiseTheHell - 93'
++	Shrinkler --flash DFF180 'Aggressors&Oracle-NewAlleance' 'compressedtmp/Aggressors&Oracle-NewAlleance'
++	Shrinkler --flash DFF180 'Divina-HighTensionNeverBorn' 'compressedtmp/Divina-HighTensionNeverBorn'
++	Shrinkler --flash DFF180 'DreamsOfPower-Born' 'compressedtmp/DreamsOfPower-Born'
++	Shrinkler --flash DFF180 'Insider intro 1989' 'compressedtmp/Insider intro 1989'
++	Shrinkler --flash DFF180 'TRAUMA-FirstDemo 19.05.91' 'compressedtmp/TRAUMA-FirstDemo 19.05.91'
++	Shrinkler --flash DFF180 'VEGA-Plasma1st' 'compressedtmp/VEGA-Plasma1st'
++	gadf -i selector -S startup-sequence compressedtmp/6_ks13 compressedtmp/horror13 compressedtmp/THE_OUTSIDER 'compressedtmp/4Ward-BornToRaiseTheHell - 93' 'compressedtmp/Aggressors&Oracle-NewAlleance' 'compressedtmp/Divina-HighTensionNeverBorn' 'compressedtmp/DreamsOfPower-Born' 'compressedtmp/Insider intro 1989' 'compressedtmp/TRAUMA-FirstDemo 19.05.91' 'compressedtmp/VEGA-Plasma1st'
+ 	rm -rf compressedtmp
+ 
+ patch:
+diff --git a/dec/selector.s b/dec/selector.s
+index eb6a7ab..49c6719 100644
+--- a/dec/selector.s
++++ b/dec/selector.s
+@@ -122,15 +122,27 @@ EMPTYARG:
+ 	dc.b	10,0			; an empty CLI command line is just LF
+ SWAPTRO:
+ 	dc.b	"6_ks13",0
+-NAME1:	dc.b	"horror13",0		; F1
+-NAME2:	dc.b	"THE_OUTSIDER",0			; F2  - free slot
+-NAME3:	dc.b	"4Ward-BornToRaiseTheHell - 93",0			; F3  - free slot
++NAME1:	dc.b	"horror13",0								; F1
++NAME2:	dc.b	"THE_OUTSIDER",0							; F2
++NAME3:	dc.b	"4Ward-BornToRaiseTheHell - 93",0			; F3
++NAME4:	dc.B	"Aggressors&Oracle-NewAlleance",0			; F4
++NAME5:	dc.b	"Divina-HighTensionNeverBorn",0				; F5
++NAME6:	dc.B	"DreamsOfPower-Born",0						; F6
++NAME7:	dc.B	"Insider intro 1989",0						; F7
++NAME8:	dc.B	"TRAUMA-FirstDemo 19.05.91",0				; F8
++NAME9:	dc.b	"VEGA-Plasma1st",0							; F9
+ 		even
+ 
+ PROGTAB:
+ 	dc.l	NAME1
+ 	dc.l	NAME2
+ 	dc.l	NAME3
++	dc.l	NAME4
++	dc.l	NAME5
++	dc.l	NAME6
++	dc.l	NAME7
++	dc.l	NAME8
++	dc.l	NAME9
+ NPROGS	EQU	(*-PROGTAB)/4
+ 
+ DOSBASE:
+-- 
+2.43.0
+
