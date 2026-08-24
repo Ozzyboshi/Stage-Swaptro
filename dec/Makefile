@@ -52,6 +52,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	rm -f selector.o selector selector.adf
 	git apply -R italodisco/patches/0002-fix-exit-with-f1.patch
 	git apply -R italodisco/patches/0001-start-of-italodisco.patch
 	$(MAKE) unpatch
