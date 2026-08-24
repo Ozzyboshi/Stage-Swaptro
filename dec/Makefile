@@ -5,11 +5,8 @@ all:
 	vasmm68k_mot -devpac -nocase -Fhunk   -o ./6ks13.o ./6.s
 	vlink -bamigahunk -o ./6_ks13 -s  ./6ks13.o
 
-	vasmm68k_mot -devpac -nocase -Fhunk   -o ./selector.o ./selector.s
-	vlink -bamigahunk -o ./selector -s  ./selector.o
-
 floppy:
-	gadf -i selector -S startup-sequence 6_ks13 horror13
+	exe2adf -i 6_ks13 -a stage-swaptro_13.adf
 
 patch:
 	git apply patches/0001-Fix-colors-in-bottom-bar.patch
