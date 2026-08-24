@@ -26,6 +26,9 @@ patchcarloversion: patch
 	git apply carloversion/patches/0004-new-text.patch
 	git apply carloversion/patches/0005-change-font-color-and-fix-copperlist.patch
 
+patchitalodisco: patch
+	git apply italodisco/patches/0001-start-of-italodisco.patch
+
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -45,4 +48,8 @@ unpatchcarloversion:
 	git apply -R carloversion/patches/0003-resistance-logo-added.patch
 	git apply -R carloversion/patches/0002-canvas-with-skull.patch
 	git apply -R carloversion/patches/0001-add-carlo-banners.patch
+	$(MAKE) unpatch
+
+unpatchitalodisco: patch
+	git apply -R italodisco/patches/0001-start-of-italodisco.patch
 	$(MAKE) unpatch
