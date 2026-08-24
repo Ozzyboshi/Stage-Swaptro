@@ -1,0 +1,49 @@
+From 55da4f02846e53c1f5f351374d27f51e66942625 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Mon, 24 Aug 2026 11:35:34 +0200
+Subject: [PATCH] text for page 1
+
+---
+ dec/6.s | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 3eb5676..75e24be 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -800,21 +800,21 @@ LAB_48838:
+ ; ---------------- STAGE0: page 1, 16 rows ----------------
+ STAGE0:
+ 	dc.b	"                                        "	; $4884C
+-	dc.b	"   NOW YOUiRE WATCHING THE SWAPTRO OF   "	; $48874
++	dc.b	"           TRINITYHQ PRESENTS           "	; $48874
+ 	dc.b	"                                        "	; $4889C
+-	dc.b	"            q-------------w             "	; $488C4
+-	dc.b	"            e             e             "	; $488EC
+-	dc.b	"            e  S T A G E  e             "	; $48914
+-	dc.b	"            e             e             "	; $4893C
+-	dc.b	"            a-------------s             "	; $48964
+-	dc.b	"                                        "	; $4898C
++	dc.b	"            q--------------w            "	; $488C4
++	dc.b	"            e              e            "	; $488EC
++	dc.b	"            e  ITALODISCO  e            "	; $48914
++	dc.b	"            e   VOLUME 3   e            "	; $4893C
++	dc.b	"            e              e            "	;
++	dc.b	"            a--------------s            "	; $48964
+ 	dc.b	"                                        "	; $489B4
+-	dc.b	"            PLEASE REMEMBER             "	; $489DC
++	dc.b	"            TODAY MENU IS               "	; $489DC
+ 	dc.b	"                                        "	; $48A04
+-	dc.b	"            PRESS SPACE BAR             "	; $48A2C
++	dc.b	" F1 -      THREESYSTEM-HORROR-89        "	; $48A2C
+ 	dc.b	"                                        "	; $48A54
+-	dc.b	"       TO PASS EVERY TEXT SCREEN        "	; $48A7C
+-	dc.b	"        F1 TO START THE OTHER ONE       "	; $48AA4
++	dc.b	"                                        "	; $48A7C
++	dc.b	"                                        "	; $48AA4
+ 	dc.b	0						; $48ACC  page end
+ 
+ ; ---------------- STAGE1: page 2, 16 rows ----------------
+-- 
+2.43.0
+

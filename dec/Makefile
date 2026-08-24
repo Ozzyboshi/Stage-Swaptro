@@ -5,8 +5,11 @@ all:
 	vasmm68k_mot -devpac -nocase -Fhunk   -o ./6ks13.o ./6.s
 	vlink -bamigahunk -o ./6_ks13 -s  ./6ks13.o
 
+	vasmm68k_mot -devpac -nocase -Fhunk   -o ./selector.o ./selector.s
+	vlink -bamigahunk -o ./selector -s  ./selector.o
+
 floppy:
-	exe2adf -i 6_ks13 -a stage-swaptro_13.adf
+	gadf -i selector -S startup-sequence 6_ks13 horror13
 
 patch:
 	git apply patches/0001-Fix-colors-in-bottom-bar.patch
@@ -29,6 +32,7 @@ patchcarloversion: patch
 patchitalodisco: patch
 	git apply italodisco/patches/0001-start-of-italodisco.patch
 	git apply italodisco/patches/0002-fix-exit-with-f1.patch
+	git apply italodisco/patches/0003-text-for-page-1.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
@@ -52,6 +56,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0003-text-for-page-1.patch
 	rm -f selector.o selector selector.adf
 	git apply -R italodisco/patches/0002-fix-exit-with-f1.patch
 	git apply -R italodisco/patches/0001-start-of-italodisco.patch
