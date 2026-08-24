@@ -1,0 +1,29 @@
+From a911f8f471f21a9ff46a3949c5f3caae084cdd45 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Mon, 24 Aug 2026 12:16:01 +0200
+Subject: [PATCH] add shrinkler into makefile
+
+---
+ dec/Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/dec/Makefile b/dec/Makefile
+index fa9694e..bb9b7bb 100644
+--- a/dec/Makefile
++++ b/dec/Makefile
+@@ -9,7 +9,11 @@ all:
+ 	vlink -bamigahunk -o ./selector -s  ./selector.o
+ 
+ floppy:
+-	gadf -i selector -S startup-sequence 6_ks13 horror13
++	mkdir -p compressedtmp
++	Shrinkler --flash DFF180 6_ks13 compressedtmp/6_ks13
++	Shrinkler --flash DFF180 horror13 compressedtmp/horror13
++	gadf -i selector -S startup-sequence compressedtmp/6_ks13 compressedtmp/horror13
++	rm -rf compressedtmp
+ 
+ patch:
+ 	git apply patches/0001-Fix-colors-in-bottom-bar.patch
+-- 
+2.43.0
+

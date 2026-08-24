@@ -30,6 +30,7 @@ patchitalodisco: patch
 	git apply italodisco/patches/0001-start-of-italodisco.patch
 	git apply italodisco/patches/0002-fix-exit-with-f1.patch
 	git apply italodisco/patches/0003-text-for-page-1.patch
+	git apply italodisco/patches/0004-add-shrinkler-into-makefile.patch
 
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
@@ -53,6 +54,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0004-add-shrinkler-into-makefile.patch
 	git apply -R italodisco/patches/0003-text-for-page-1.patch
 	rm -f selector.o selector selector.adf
 	git apply -R italodisco/patches/0002-fix-exit-with-f1.patch
