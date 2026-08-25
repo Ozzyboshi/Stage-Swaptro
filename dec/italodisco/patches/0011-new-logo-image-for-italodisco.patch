@@ -1,12 +1,32 @@
-From 96371d3a90ba97e375bc4a29769e72bd6251a070 Mon Sep 17 00:00:00 2001
+From 60c44ce492ee2af5e308e3282d2106c539e3a570 Mon Sep 17 00:00:00 2001
 From: Alessio Garzi <agarzi@sipwise.com>
-Date: Tue, 25 Aug 2026 16:18:48 +0200
+Date: Tue, 25 Aug 2026 16:39:04 +0200
 Subject: [PATCH] new logo image for italodisco
 
 ---
+ dec/6.s                     |   8 ++++----
  dec/data_34000_to_48000.bin | Bin 37832 -> 37832 bytes
- 1 file changed, 0 insertions(+), 0 deletions(-)
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/dec/6.s b/dec/6.s
+index 3be37a9..b7aac5a 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -604,10 +604,10 @@ TITLELOGO_PTR_4_H:
+ TITLELOGO_PTR_4_L:
+ 	DC.W	$5068
+ 	DC.L	$01800000 ;485c4
+-	DC.L	$01820fff,$0184081f,$0186095f,$01880b8f ;485d4
+-	DC.L	$018a0dcf,$018c0145,$018e08fc,$01900032 ;485e4
+-	DC.L	$01920053,$01940064,$01960085,$019800a6 ;485f4
+-	DC.L	$019a01c7,$019c01d8,$019e01f9,$6c11fffe ;48604
++	DC.L	$01820332,$01840555,$01860888,$01880bbb ;485d4
++	DC.L	$018a0ddd,$018c0fff,$018e0893,$01900ab4 ;485e4
++	DC.L	$01920de3,$01940ef7,$01960111,$01980c02 ;485f4
++	DC.L	$019a0b44,$019c0f97,$019e0fd5,$6c11fffe ;48604
+ 
+ BPLPTR_UPPER_BANNER:
+ 	DC.L	$01000200,$6e11fffe,$01004200,$00e00004 ;48614  barra alta: WAIT $6E (era $6F)
 diff --git a/dec/data_34000_to_48000.bin b/dec/data_34000_to_48000.bin
 index 9c815bc4df1ae7d177953c3bb4a57b5f06db3d70..437aa623e1105be7375a202a57ded8be7abaddf9 100644
 GIT binary patch
