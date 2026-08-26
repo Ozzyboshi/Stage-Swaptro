@@ -38,7 +38,7 @@ patchitalodisco: patch
 	git apply italodisco/patches/0009-new-music-in-swaptro.patch
 	git apply italodisco/patches/0010-new-canvas-for-italodisco.patch
 	git apply italodisco/patches/0011-new-logo-image-for-italodisco.patch
-
+	git apply italodisco/patches/0012-new-banners-for-italodisco.patch
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -61,6 +61,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0012-new-banners-for-italodisco.patch
 	git apply -R italodisco/patches/0011-new-logo-image-for-italodisco.patch
 	git apply -R italodisco/patches/0010-new-canvas-for-italodisco.patch
 	git apply -R italodisco/patches/0009-new-music-in-swaptro.patch
