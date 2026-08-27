@@ -1,0 +1,334 @@
+From df6a44e5cd2e102474d4942e0a630e0afedc56fc Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Thu, 27 Aug 2026 10:08:27 +0200
+Subject: [PATCH] new text
+
+---
+ dec/6.s | 246 ++++++++++++++++++++++----------------------------------
+ 1 file changed, 96 insertions(+), 150 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 20c00c2..d734c0f 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -43,6 +43,7 @@ SECSTRT_0:
+ 	BSR.W	CLEARBPL		;48000: 61000818
+ 	BSR.W	SUB_48204		;4800a: 610001f8
+ 	CLR.B	D4			;4800e: 4204
++PAGELOOP:
+ 	;MOVEA.L	#$0004884c,A1		;48010: 227c0004884c
+ 	movea.l #STAGE0,A1		;48010: 227c0004884c
+ 	BSR.W	SUB_48314		;48016: 610002fc
+@@ -81,30 +82,8 @@ SECSTRT_0:
+ 	BSR.W	LAB_4826A		;48092: 610001d6
+ 	BSR.W	SUB_48106		;48096: 6100006e
+ 	BSR.W	CLEARBPL		;4809a: 6100077e
+-	clr.w $100
+-	;MOVE.W	#$0000,LAB_486A6	;4809e: 33fc0000000486a6
+-	BSR.W 	RESET_TXT_CANVAS
+-	;MOVEA.L	#$000494a9,A1		;480a6: 227c000494a9
+-	lea STAGE6,a1
+-	BSR.W	SUB_48314		;480ac: 61000266
+-	BSR.W	LAB_4826A		;480b0: 610001b8
+-	BSR.W	SUB_48106		;480b4: 61000050
+-	BSR.W	CLEARBPL		;480b8: 61000760
+-	;MOVE.W	#$0000,LAB_486A6	;480bc: 33fc0000000486a6
+-	BSR.W 	RESET_TXT_CANVAS
+-	;MOVEA.L	#$0004968a,A1		;480c4: 227c0004968a
+-	lea STAGE7,a1
+-	BSR.W	SUB_48314		;480ca: 61000248
+-	BSR.W	LAB_4826A		;480ce: 6100019a
+-	BSR.W	SUB_48106		;480d2: 61000032
+-	BSR.W	CLEARBPL		;480d6: 61000742
+-	;MOVE.W	#$0000,LAB_486A6	;480da: 33fc0000000486a6
+ 	BSR.W 	RESET_TXT_CANVAS
+-	;MOVEA.L	#$0004981b,A1		;480e2: 227c0004981b
+-	lea STAGE8,a1
+-	BSR.W	SUB_48314		;480e8: 6100022a
+-	BSR.W	LAB_4826A		;480ec: 6100017c
+-	BSR.W	SUB_48106		;480f0: 61000014
++	bra.w	PAGELOOP		; last page: back to the menu. BRA, not BSR
+ DEMOEND:
+ 	BSR.W	CLEARBPL		;480f4: 61000724
+ 	BSR.W	SUB_482D6		;48100: 610001d4
+@@ -667,7 +646,7 @@ TEXT_BITPLANE_2_H:
+ 	DC.L	$000700f2
+ TEXT_BITPLANE_2_L:
+ 	DC.W	$2800			;486a6
+-	DC.L	$f611fffe		; WAIT riga $F6
++	DC.L	$f711fffe		; WAIT riga $F6
+ 	DC.W	$0100
+ BPLPTR_BOTTOM_BANNER:
+ 	DC.L	$420000e0,$000400e2,$fb0000e4,$000400e6 ;48736
+@@ -688,7 +667,7 @@ LAB_4878E:
+ LAB_48792:
+ 	DC.L	$0080019e		;48792
+ LAB_48796:
+-	DC.L	$00f0fe11		;48796
++	DC.L	$00f0ff11		;48796
+ 	DC.L	$fffe0100		; WAIT $FE + registro BPLCON0
+ 	DC.L	$02000180,$00000182,$00000184	; BPLCON0=0 piani, poi i colori a zero
+ 	DC.L	$00000186,$00000188,$0000018a,$0000018c ;487a6
+@@ -708,13 +687,16 @@ GraphicsLibName:
+ OLDFGXBASE:
+ 	DS.L	1			;487f6
+ NEWINT3:
+-	MOVEM.L	D0-D4/A0-A4,-(A7)	;487fa: 48e7f8f8
++	MOVEM.L	D0-D7/A0-A6,-(A7)	; save EVERYTHING: the replayer below
++					; clobbers D7 without saving it, and an
++					; interrupt must never eat the registers
++					; of the code it interrupted
+ 	MOVE.W	INTREQR,D0		;487fe: 303900dff01e
+ 	BTST	#5,D0			;48804: 08000005
+ 	BEQ.S	LAB_48810		;48808: 6706
+ 	JSR	LAB_49C8C		;4880a: 4eb900049c8c
+ LAB_48810:
+-	MOVEM.L	(A7)+,D0-D4/A0-A4	;48810: 4cdf1f1f
++	MOVEM.L	(A7)+,D0-D7/A0-A6	;48810
+ 	DC.W	$4ef9			;48814
+ OLD_INT3:
+ 	DS.L	1			;48816
+@@ -799,147 +781,111 @@ LAB_48838:
+ 
+ ; ---------------- STAGE0: page 1, 16 rows ----------------
+ STAGE0:
+-	dc.b	"           TRINITYHQ PRESENTS           "	; $48874
+-	dc.b	"            q--------------w            "	; $488C4
+-	dc.b	"            e  ITALODISCO  e            "	; $48914
+-	dc.b	"            e   VOLUME 3   e            "	; $4893C
+-	dc.b	"            a--------------s            "	; $48964
+-	dc.b	"                                        "	; $489B4
+-	dc.b	" F1 - THREESYSTEM-HORROR-89             "	; $48A2C
+-	dc.b	" F2 - THE OUTSIDER                      "	; $48A54
+-	dc.b	" F3 - 4WARD-BORNTORAISETHEHELL - 93     "
+-	dc.b    " F4 - AGGRESSORS AND ORACLE-NEWALLEANCE "
+-	dc.b	" F5 - DIVINA-HIGHTENSIONNEVERBORN       "
+-	dc.b    " F6 - DREAMSOFPOWER-BORN                "
+-	dc.b    " F7 - INSIDER INTRO 1989                "
+-	dc.B    " F8 - TRAUMA-FIRSTDEMO 19-05-91         "
+-	dc.b    " F9 - VEGA-PLASMA1ST                    "
+-	dc.b	"                                        "	; $4889C
+-	dc.b	0						; $48ACC  page end
++;            1234567890123456789012345678901234567890
++	dc.b	"   TRINITY IS HAPPY TO CELEBRATE MORE   "
++ 	dc.b	"  OLD ITALIAN RELICS SALVAGED FROM ROT  "
++	dc.b	"                                        "
++ 	dc.b	"q--------------------------------------w"
++	dc.b	"e F1 - THREESYSTEM -HORROR(FIXED)  i89 e"
++ 	dc.b	"e F2 - THE OUTSIDER                i89 e"
++	dc.b	"e F3 - 4WARD -BORN TO RISE HELL    i93 e"
++ 	dc.b	"e F4 - AGGRESSORS/ORACLE-ALLEANCE  i90 e"
++ 	dc.b	"e F5 - DIVINA -HITENSION NEVERBORN i90 e"
++	dc.b	"e F6 - DREAMS OF POWER -DEMO &     i90 e"
++	dc.b	"e F7 - INSIDER -INTRO              i89 e"
++	dc.b	"e F8 - TRAUMA -FIRST DEMO          i91 e"
++	dc.b	"e F9 - VEGA -OFFICIAL PLASMA       i91 e"
++	dc.b	"a--------------------------------------s"
++	dc.b	"       & REQUIRES SOME FAST RAM         "
++	dc.b	" PRESS SPACE (THE LONG ONE) FOR CREDITS "	
++ 	dc.b	0						;
++ 			 
+ 
+ ; ---------------- STAGE1: page 2, 16 rows ----------------
+ STAGE1:
++;            1234567890123456789012345678901234567890
+ 	dc.b	"                                        "	; $48ACD
+-	dc.b	"                                        "	; $48AF5
++	dc.b	" KRIS/REBELS - ORIGINAL 1992 CODE       "	; $48AF5
+ 	dc.b	"                                        "	; $48B1D
+-	dc.b	"  THE CAUSE OF MAKING THIS SWAPTRO IS   "	; $48B45
+-	dc.b	"                                        "	; $48B6D
+-	dc.b	"   FINDING SOME NEW CONTACTS, FRIENDS   "	; $48B95
+-	dc.b	"                                        "	; $48BBD
+-	dc.b	"      AND MAYBE SOME COOL GUYS WHO      "	; $48BE5
+-	dc.b	"      MIGHT BE WANTINi TO JOIN US.      "	; $48C0D
+-	dc.b	"                                        "	; $48C35
+-	dc.b	"      YOU CAN BE BEGINNER OR ELITE      "	; $48C5D
+-	dc.b	"         ITiS NOT SO IMPORTANT          "	; $48C85
+-	dc.b	"         JUST DONiT BE A LAMER          "	; $48CAD
++	dc.b	" OZZYBOSHI/RESISTANCE - DISASSEMBLY,    "	; $48B45
++	dc.b	"   ANALYSIS, ADDITIONAL CODE, FIXING    "	; $48B6D
++	dc.b	"                                        "	; $48B95
++	dc.b	" FRATER SINISTER (RIP) - MUSIC TUNE     "	; $48BBD
++	dc.b	"                        LEET IS SHIT    "	; $48BE5
++	dc.b	"                                        "	; $48C0D
++	dc.b	" Z3K/TRINITY - GFX, INTRO SELECTION &   "	; $48C35
++	dc.b	"                   PRESERVATION, TEXTS  "  ; $48C5D
++	dc.b	"                                        "	; $48C85
++	dc.b	"  ALL ITALIANS FELT IN LOVE WITH AMIGA  " 	; $48CAD
+ 	dc.b	"                                        "	; $48CD5
+ 	dc.b	"                                        "	; $48CFD
+-	dc.b	"                                        "	; $48D25
++	dc.b	"  PRESS THE LONG ONE FOR THE CONTACTS   "	; $48D25
+ 	dc.b	0						; $48D4D  page end
+ 
+ ; ---------------- STAGE2: page 3, 16 rows ----------------
+ STAGE2:
+-	dc.b	"          YOU WANT TO JOIN US           "	; $48D4E
+-	dc.b	"           YOU WANT SWAPPING            "	; $48D76
+-	dc.b	"    OR JUST SOME FUN AND FRIENDSHIP     "	; $48D9E
+-	dc.b	" GRAB A PEN AND A PAPER, WRITE A LETTER "	; $48DC6
+-	dc.b	"         AND SEND ME SOMETHING          "	; $48DEE
+-	dc.b	"                ADDRESS                 "	; $48E16
+-	dc.b	"                                        "	; $48E3E
+-	dc.b	"          q-----------------w           "	; $48E66
+-	dc.b	"          e                 e           "	; $48E8E
+-	dc.b	"          e VIC/STAGE       e           "	; $48EB6
+-	dc.b	"          e P.K. 147        e           "	; $48EDE
+-	dc.b	"          e ACIBADEM 81020  e           "	; $48F06
+-	dc.b	"          e ISTANBUL        e           "	; $48F2E
+-	dc.b	"          e TURKEY          e           "	; $48F56
+-	dc.b	"          e                 e           "	; $48F7E
+-	dc.b	"          a-----------------s           "	; $48FA6
++;            1234567890123456789012345678901234567890
++	dc.b	" WANNA SEE HOW ALL THIS WAS DONE ?      "	; $48D4E
++	dc.b	"                                        "	; $48D76
++	dc.b	" z GITHUB.COM/OZZYBOSHI/STAGE-SWAPTRO x "	; $48D9E
++	dc.b	"                                        "	; $48DC6
++	dc.b	" WANNA SEE PREVIOUS ITALODISCO VOLUMES? "	; $48DEE
++	dc.b	"                                        "	; $48E16
++	dc.b	" z WWW.TRINITYHQ.EU x OR z POUET.NET   x"	; $48E3E
++	dc.b	"                         z DEMOZOO.ORG x"	; $48E66
++	dc.b	"                                        "	; $48E8E
++	dc.b	" WANNA CONTRIBUTE TO ITALODISCO WITH    "	; $48EB6
++	dc.b	" SOME OLD DISKS YOU FORGOT IN GARAGE,   "	; $48EDE
++	dc.b	" INTRO OR MOD YOU NEVER RELEASED?       "	; $48F06
++	dc.b	"                                        "	; $48F2E
++	dc.b	" MAILTO: z ITALO(A)TRINITYHQ.EU x       "	; $48F56
++	dc.b	"                                        "	; $48F7E
++	dc.b	" PRESS LONG SPACEBAR FOR THE GREETINGS  "	; $48FA6
+ 	dc.b	0						; $48FCE  page end
+ 
+ ; ---------------- STAGE3: page 4, 16 rows ----------------
+ STAGE3:
+-	dc.b	"                                        "	; $48FCF
+-	dc.b	"     THIS IS NOT ONLY A SWAPTRO...      "	; $48FF7
+-	dc.b	"                                        "	; $4901F
+-	dc.b	"      IiM PROUD TO TELL YOU THAT        "	; $49047
+-	dc.b	"                                        "	; $4906F
+-	dc.b	"         ME: VIC/STAGE                  "	; $49097
+-	dc.b	"             KRIS/REBELS                "	; $490BF
+-	dc.b	"             BLOODY (INDEPENDENT)       "	; $490E7
+-	dc.b	"                                        "	; $4910F
+-	dc.b	"          ARE GOING TO RELEASE          "	; $49137
+-	dc.b	"                                        "	; $4915F
+-	dc.b	"             A NEW DISK-MAG             "	; $49187
+-	dc.b	"                                        "	; $491AF
+-	dc.b	"                 q---------------w      "	; $491D7
+-	dc.b	"     CALLED      e E T E R N A L e      "	; $491FF
+-	dc.b	"                 a---------------s      "	; $49227
++;            1234567890123456789012345678901234567890
++	dc.b	"   GREETINGS IN VERY RANDOM ORDER TO:   "	; $48FCF
++	dc.b	" RAZDEE, FRIOL, ENTROPICROBI AND ALL THE"	; $48FF7
++	dc.b	"ROMA.EXE ORGAS FOR THE AWESOME DEMOPARTY"  ; $4901F
++	dc.b	"TAD, GECCO, DIXAN, SURFING, DMAN, MOD3M "	; $49047
++	dc.b	"CAPITAN GIACO, SODA7, LYNX, EVERYONE WHO"	; $4906F
++	dc.b	"   CONTRIBUTED TO SUCH A GREAT PARTY    "	; $49097
++	dc.b	"  PELLICUS, PRINCE/PHAZE 101, HOUNDDOG, "	; $490BF
++	dc.b	" PAN, MACNO, KFD, THE DARK CODER, FAROX "	; $490E7
++	dc.b	"                 A N D                  "	; $4910F
++	dc.b	"           EVERYONE I FORGOT            "	; $49137
++	dc.b	" SINCE IiM PAST 32HEX AND MY AGNUS IS   "	; $4915F
++	dc.b	" OLD AND CANiT ADDRESS ANY MORE CHIP RAM"  ; $49187
++	dc.b	" EXTRA SPECIAL THANKS TO OZZY WHO SAVED "	; $491AF
++	dc.b	"THE DAY, ITALODISCO AND SOME HARDWARE OF"	; $491D7
++	dc.b	" MINE TOO, I OWE YOU BIG TIME.          "	; $491FF
++	dc.b	"          PRESS SPACE FOR NEXT PART zzz "	; $49227
+ 	dc.b	0						; $4924F  page end
+ 
+ ; ---------------- STAGE5: page 5, 15 rows ----------------
+ STAGE5:
+-	dc.b	"   SEND ARTICLES                        "	; $49250
+-	dc.b	"        NEWS                            "	; $49278
+-	dc.b	"        AND FREE ASCII ADVERTISEMENTS   "	; $492A0
+-	dc.b	"                                        "	; $492C8
+-	dc.b	" YOUR ARTICLES CAN BE ABOUT EVERYTHING  "	; $492F0
+-	dc.b	" YOUR NEWS CAN BE ABOUT EVERYTHING      "	; $49318
+-	dc.b	"      BUT MORE THEYiRE ABOUT AMIGA      "	; $49340
+-	dc.b	"          MORE THEYiRE ABOUT THE SCENE  "	; $49368
+-	dc.b	" AND MORE WEiLL BE SATISFIED NiHAPPY    "	; $49390
+-	dc.b	"                                        "	; $493B8
+-	dc.b	"     WE PREFER YOU WRITE THEM WITH      "	; $493E0
+-	dc.b	"   A GOOD EDITOR (FOR EXAMPLE iCEDi)    "	; $49408
+-	dc.b	"         SO THAT WEiLL SEND YOU         "	; $49430
+-	dc.b	"    THE FOLLOWING ISSUE OF OUR MAG      "	; $49458
+-	dc.b	"   DONiT FORGET TO FILL THE VOTESHEET   "	; $49480
+-	dc.b	0						; $494A8  page end
+-
+-; ---------------- STAGE6: page 6, 12 rows ----------------
+-STAGE6:
+-	dc.b	"                                        "	; $494A9
+-	dc.b	"                                        "	; $494D1
+-	dc.b	"                                        "	; $494F9
+-	dc.b	" REMEMBER! THE ADDY FOR                 "	; $49521
+-	dc.b	" JOINING                                "	; $49549
+-	dc.b	" SWAPPING        q-----------------w    "	; $49571
+-	dc.b	" FRIENDSHIP      e VIC/STAGE       e    "	; $49599
+-	dc.b	" ARTICLES        e P.K. 147        e    "	; $495C1
+-	dc.b	" NEWS            e ACIBADEM 81020  e    "	; $495E9
+-	dc.b	" FREE ADS        e ISTANBUL        e    "	; $49611
+-	dc.b	"                 e TURKEY          e    "	; $49639
+-	dc.b	"                 a-----------------s    "	; $49661
+-	dc.b	0						; $49689  page end
+-
+-; ---------------- STAGE7: page 7, 10 rows ----------------
+-STAGE7:
+-	dc.b	"                                        "	; $4968A
+-	dc.b	"                                        "	; $496B2
+-	dc.b	"                                        "	; $496DA
+-	dc.b	"                                        "	; $49702
+-	dc.b	"                                        "	; $4972A
+-	dc.b	"        z  G R E E T I N G S  x         "	; $49752
+-	dc.b	"                                        "	; $4977A
+-	dc.b	"     TO ALL MY FRIENDS NiCONTACTS       "	; $497A2
+-	dc.b	"         TO ALL GROUPMEMBERS            "	; $497CA
+-	dc.b	"     AND OF COURSE TO  B L O O D Y      "	; $497F2
+-	dc.b	0						; $4981A  page end
+-
+-; ---------------- STAGE8: page 8, 11 rows ----------------
+-STAGE8:
+-	dc.b	"                                        "	; $4981B
+-	dc.b	"                                        "	; $49843
+-	dc.b	"                                        "	; $4986B
+-	dc.b	"                                        "	; $49893
+-	dc.b	"       NOW ITiS TIME FOR CREDITS        "	; $498BB
+-	dc.b	"                                        "	; $498E3
+-	dc.b	"  MUSIC................FRATER SINISTER  "	; $4990B
+-	dc.b	"                                        "	; $49933
+-	dc.b	"  GRAPHICS.....VIC/STAGE & KRIS/REBELS  "	; $4995B
+-	dc.b	"                                        "	; $49983
+-	dc.b	"  CODING...................KRIS/REBELS  "	; $499AB
+-	dc.b	0						; $499D3  page end
++;            1234567890123456789012345678901234567890
++	dc.b	" HELLO, OZZY HERE.                      "
++	dc.b	"                                        "
++	dc.b	" THIS IS MY FIRST DEMODISK, AND I HAD   "
++	dc.b	" NO IDEA HOW TO LAUNCH AN EXECUTABLE    "
++	dc.b	" FROM AN INTRO WITH THE OS SHUT DOWN.   "
++	dc.b	" FINGERS CROSSED IT RUNS ON YOURS.      "
++	dc.b	"                                        "
++	dc.b	" THANKS TO Z3K FOR LETTING ME JOIN      "
++	dc.b	" THE ITALODISCO PROJECT.                "
++	dc.b	"                                        "
++	dc.b	" WHAT IS ON THIS DISK IS A BEAUTIFUL    "
++	dc.b	" PIECE OF PRESERVATION WORK. WITHOUT IT "
++	dc.b	" THESE BORNTROS WOULD MOST LIKELY BE    "
++	dc.b	" LOST FOREVER.                          "
++	dc.b	" xxx PRESS SPACE TO GO BACK TO THE MENU "
++	dc.b	"                                        "
++	dc.b	0						; page end
++	even				; each page is an odd number of bytes:
++					; keep the following code word-aligned
+ 
+ TEXT1: DC.L	$41424344,$45464748 ;499d4
+ 	DC.L	$494a4b4c,$4d4e4f50,$51525354,$55565758 ;499dc
+@@ -2081,4 +2027,4 @@ BITPLANES:
+ 	SECTION	"CODE2",CODE_C
+ MOD:
+ 	incbin "data_34000_to_48000.bin"
+-	END
++	END
+\ No newline at end of file
+-- 
+2.43.0
+
