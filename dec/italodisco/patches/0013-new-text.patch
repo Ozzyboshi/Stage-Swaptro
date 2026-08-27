@@ -111,23 +111,23 @@ index 20c00c2..d734c0f 100644
 -	dc.b	0						; $48ACC  page end
 +;            1234567890123456789012345678901234567890
 +	dc.b	"   TRINITY IS HAPPY TO CELEBRATE MORE   "
-+ 	dc.b	"  OLD ITALIAN RELICS SALVAGED FROM ROT  "
++	dc.b	"  OLD ITALIAN RELICS SALVAGED FROM ROT  "
 +	dc.b	"                                        "
-+ 	dc.b	"q--------------------------------------w"
++	dc.b	"q--------------------------------------w"
 +	dc.b	"e F1 - THREESYSTEM -HORROR(FIXED)  i89 e"
-+ 	dc.b	"e F2 - THE OUTSIDER                i89 e"
++	dc.b	"e F2 - THE OUTSIDER                i89 e"
 +	dc.b	"e F3 - 4WARD -BORN TO RISE HELL    i93 e"
-+ 	dc.b	"e F4 - AGGRESSORS/ORACLE-ALLEANCE  i90 e"
-+ 	dc.b	"e F5 - DIVINA -HITENSION NEVERBORN i90 e"
++	dc.b	"e F4 - AGGRESSORS/ORACLE-ALLEANCE  i90 e"
++	dc.b	"e F5 - DIVINA -HITENSION NEVERBORN i90 e"
 +	dc.b	"e F6 - DREAMS OF POWER -DEMO &     i90 e"
 +	dc.b	"e F7 - INSIDER -INTRO              i89 e"
 +	dc.b	"e F8 - TRAUMA -FIRST DEMO          i91 e"
 +	dc.b	"e F9 - VEGA -OFFICIAL PLASMA       i91 e"
 +	dc.b	"a--------------------------------------s"
 +	dc.b	"       & REQUIRES SOME FAST RAM         "
-+	dc.b	" PRESS SPACE (THE LONG ONE) FOR CREDITS "	
-+ 	dc.b	0						;
-+ 			 
++	dc.b	" PRESS SPACE (THE LONG ONE) FOR CREDITS "
++	dc.b	0						;
++
  
  ; ---------------- STAGE1: page 2, 16 rows ----------------
  STAGE1:
@@ -331,4 +331,3 @@ index 20c00c2..d734c0f 100644
 \ No newline at end of file
 -- 
 2.43.0
-
