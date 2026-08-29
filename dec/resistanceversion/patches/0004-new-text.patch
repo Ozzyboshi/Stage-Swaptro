@@ -1,0 +1,294 @@
+From 3fef07d5aa83276cf7d7fc0b1158c668e099972d Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Wed, 19 Aug 2026 11:30:13 +0200
+Subject: [PATCH] new text
+
+---
+ dec/6.s | 257 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 130 insertions(+), 127 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 1536e03..aad2276 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -736,147 +736,150 @@ LAB_48838:
+ 
+ ; ---------------- STAGE0: page 1, 16 rows ----------------
+ STAGE0:
+-	dc.b	"                                        "	; $4884C
+-	dc.b	"   NOW YOUiRE WATCHING THE SWAPTRO OF   "	; $48874
+-	dc.b	"                                        "	; $4889C
+-	dc.b	"            q-------------w             "	; $488C4
+-	dc.b	"            e             e             "	; $488EC
+-	dc.b	"            e  S T A G E  e             "	; $48914
+-	dc.b	"            e             e             "	; $4893C
+-	dc.b	"            a-------------s             "	; $48964
+-	dc.b	"                                        "	; $4898C
+-	dc.b	"                                        "	; $489B4
+-	dc.b	"            PLEASE REMEMBER             "	; $489DC
+-	dc.b	"                                        "	; $48A04
+-	dc.b	"           LEFT MOUSE BUTTON            "	; $48A2C
+-	dc.b	"                                        "	; $48A54
+-	dc.b	"       TO PASS EVERY TEXT SCREEN        "	; $48A7C
+-	dc.b	"                                        "	; $48AA4
+-	dc.b	0						; $48ACC  page end
++	dc.b	"                                        "
++	dc.b	"   NOW YOUiRE WATCHING THE SWAPTRO OF   "
++	dc.b	"                                        "
++	dc.b	"      q-------------------------w       "
++	dc.b	"      e   R E S I S T A N C E   e       "
++	dc.b	"      a-------------------------s       "
++	dc.b	"                                        "
++	dc.b	"            PLEASE REMEMBER             "
++	dc.b	"           LEFT MOUSE BUTTON            "
++	dc.b	"       TO PASS EVERY TEXT SCREEN        "
++	dc.b	"                                        "
++	dc.b	0
+ 
+-; ---------------- STAGE1: page 2, 16 rows ----------------
++; ---------------- STAGE1: 15 righe ----------------
+ STAGE1:
+-	dc.b	"                                        "	; $48ACD
+-	dc.b	"                                        "	; $48AF5
+-	dc.b	"                                        "	; $48B1D
+-	dc.b	"  THE CAUSE OF MAKING THIS SWAPTRO IS   "	; $48B45
+-	dc.b	"                                        "	; $48B6D
+-	dc.b	"   FINDING SOME NEW CONTACTS, FRIENDS   "	; $48B95
+-	dc.b	"                                        "	; $48BBD
+-	dc.b	"      AND MAYBE SOME COOL GUYS WHO      "	; $48BE5
+-	dc.b	"      MIGHT BE WANTINi TO JOIN US.      "	; $48C0D
+-	dc.b	"                                        "	; $48C35
+-	dc.b	"      YOU CAN BE BEGINNER OR ELITE      "	; $48C5D
+-	dc.b	"         ITiS NOT SO IMPORTANT          "	; $48C85
+-	dc.b	"         JUST DONiT BE A LAMER          "	; $48CAD
+-	dc.b	"                                        "	; $48CD5
+-	dc.b	"                                        "	; $48CFD
+-	dc.b	"                                        "	; $48D25
+-	dc.b	0						; $48D4D  page end
++	dc.b	"                                        "
++	dc.b	"            z WHAT IS THIS x            "
++	dc.b	"                                        "
++	dc.b	"   THIS IS A REBUILD OF THE 1992        "
++	dc.b	"   SWAPTRO BY STAGE. I FOUND IT ON AN   "
++	dc.b	"   OLD DISK, UNPACKED IT, DISASSEMBLED  "
++	dc.b	"   IT AND PUT IT BACK TOGETHER          "
++	dc.b	"   LINE BY LINE.                        "
++	dc.b	"                                        "
++	dc.b	"   EVERY BUG I FOUND IS FIXED AND       "
++	dc.b	"   EVERY PICTURE IS NEW.                "
++	dc.b	"                                        "
++	dc.b	"   THE FULL SOURCE IS ON THIS DISK.     "
++	dc.b	"   TAKE IT, READ IT, BREAK IT,          "
++	dc.b	"   MAKE IT YOURS.                       "
++	dc.b	0
+ 
+-; ---------------- STAGE2: page 3, 16 rows ----------------
++; ---------------- STAGE2: 15 righe ----------------
+ STAGE2:
+-	dc.b	"          YOU WANT TO JOIN US           "	; $48D4E
+-	dc.b	"           YOU WANT SWAPPING            "	; $48D76
+-	dc.b	"    OR JUST SOME FUN AND FRIENDSHIP     "	; $48D9E
+-	dc.b	" GRAB A PEN AND A PAPER, WRITE A LETTER "	; $48DC6
+-	dc.b	"         AND SEND ME SOMETHING          "	; $48DEE
+-	dc.b	"                ADDRESS                 "	; $48E16
+-	dc.b	"                                        "	; $48E3E
+-	dc.b	"          q-----------------w           "	; $48E66
+-	dc.b	"          e                 e           "	; $48E8E
+-	dc.b	"          e VIC/STAGE       e           "	; $48EB6
+-	dc.b	"          e P.K. 147        e           "	; $48EDE
+-	dc.b	"          e ACIBADEM 81020  e           "	; $48F06
+-	dc.b	"          e ISTANBUL        e           "	; $48F2E
+-	dc.b	"          e TURKEY          e           "	; $48F56
+-	dc.b	"          e                 e           "	; $48F7E
+-	dc.b	"          a-----------------s           "	; $48FA6
+-	dc.b	0						; $48FCE  page end
++	dc.b	"                                        "
++	dc.b	"       z WHAT I AM LOOKING FOR x        "
++	dc.b	"                                        "
++	dc.b	"   NO WAREZ. NO PIRATE STUFF.           "
++	dc.b	"   THOSE DAYS ARE GONE AND I DO NOT     "
++	dc.b	"   MISS THEM.                           "
++	dc.b	"                                        "
++	dc.b	"   WHAT I WANT IS PEOPLE WHO SHARE      "
++	dc.b	"   CODE AND ROUTINES.                   "
++	dc.b	"   COPPER TRICKS, BLITTER HACKS,        "
++	dc.b	"   68000 ASM, C ON AMIGAOS...           "
++	dc.b	"                                        "
++	dc.b	"   IF YOU HAVE A ROUTINE YOU ARE        "
++	dc.b	"   PROUD OF, I WANT TO SEE IT.          "
++	dc.b	"   AND I WILL SHOW YOU MINE.            "
++	dc.b	0
+ 
+-; ---------------- STAGE3: page 4, 16 rows ----------------
++; ---------------- STAGE3: 14 righe ----------------
+ STAGE3:
+-	dc.b	"                                        "	; $48FCF
+-	dc.b	"     THIS IS NOT ONLY A SWAPTRO...      "	; $48FF7
+-	dc.b	"                                        "	; $4901F
+-	dc.b	"      IiM PROUD TO TELL YOU THAT        "	; $49047
+-	dc.b	"                                        "	; $4906F
+-	dc.b	"         ME: VIC/STAGE                  "	; $49097
+-	dc.b	"             KRIS/REBELS                "	; $490BF
+-	dc.b	"             BLOODY (INDEPENDENT)       "	; $490E7
+-	dc.b	"                                        "	; $4910F
+-	dc.b	"          ARE GOING TO RELEASE          "	; $49137
+-	dc.b	"                                        "	; $4915F
+-	dc.b	"             A NEW DISK-MAG             "	; $49187
+-	dc.b	"                                        "	; $491AF
+-	dc.b	"                 q---------------w      "	; $491D7
+-	dc.b	"     CALLED      e E T E R N A L e      "	; $491FF
+-	dc.b	"                 a---------------s      "	; $49227
+-	dc.b	0						; $4924F  page end
++	dc.b	"                                        "
++	dc.b	"       z COME AND BUILD WITH ME x       "
++	dc.b	"                                        "
++	dc.b	"   I HAVE PROJECTS THAT NEED HANDS:     "
++	dc.b	"                                        "
++	dc.b	"     AMIGAFONTEDITOR                    "
++	dc.b	"     AMIGAPOUETDOWNLOADER               "
++	dc.b	"     ...AND WHATEVER COMES NEXT.        "
++	dc.b	"                                        "
++	dc.b	"   CODERS, GRAPHICIANS, MUSICIANS,      "
++	dc.b	"   TESTERS, AND PEOPLE WHO JUST WANT    "
++	dc.b	"   TO COMPLAIN ABOUT MY CODE.           "
++	dc.b	"                                        "
++	dc.b	"   ALL OF YOU ARE WELCOME.              "
++	dc.b	0
+ 
+-; ---------------- STAGE5: page 5, 15 rows ----------------
++; ---------------- STAGE5: 14 righe ----------------
+ STAGE5:
+-	dc.b	"   SEND ARTICLES                        "	; $49250
+-	dc.b	"        NEWS                            "	; $49278
+-	dc.b	"        AND FREE ASCII ADVERTISEMENTS   "	; $492A0
+-	dc.b	"                                        "	; $492C8
+-	dc.b	" YOUR ARTICLES CAN BE ABOUT EVERYTHING  "	; $492F0
+-	dc.b	" YOUR NEWS CAN BE ABOUT EVERYTHING      "	; $49318
+-	dc.b	"      BUT MORE THEYiRE ABOUT AMIGA      "	; $49340
+-	dc.b	"          MORE THEYiRE ABOUT THE SCENE  "	; $49368
+-	dc.b	" AND MORE WEiLL BE SATISFIED NiHAPPY    "	; $49390
+-	dc.b	"                                        "	; $493B8
+-	dc.b	"     WE PREFER YOU WRITE THEM WITH      "	; $493E0
+-	dc.b	"   A GOOD EDITOR (FOR EXAMPLE iCEDi)    "	; $49408
+-	dc.b	"         SO THAT WEiLL SEND YOU         "	; $49430
+-	dc.b	"    THE FOLLOWING ISSUE OF OUR MAG      "	; $49458
+-	dc.b	"   DONiT FORGET TO FILL THE VOTESHEET   "	; $49480
+-	dc.b	0						; $494A8  page end
++	dc.b	"                                        "
++	dc.b	"                                        "
++	dc.b	"        q---------------------w         "
++	dc.b	"        e   JOIN RESISTANCE   e         "
++	dc.b	"        a---------------------s         "
++	dc.b	"                                        "
++	dc.b	"   WE ARE A DEMOGROUP AND WE ARE        "
++	dc.b	"   STILL ALIVE IN 2026.                 "
++	dc.b	"                                        "
++	dc.b	"   IF YOU CODE, DRAW, TRACK OR JUST     "
++	dc.b	"   LOVE THIS MACHINE, GET IN TOUCH.     "
++	dc.b	"                                        "
++	dc.b	"   THERE IS ALWAYS ROOM FOR ONE MORE.   "
++	dc.b	"                                        "
++	dc.b	0
+ 
+-; ---------------- STAGE6: page 6, 12 rows ----------------
++; ---------------- STAGE6: 15 righe ----------------
+ STAGE6:
+-	dc.b	"                                        "	; $494A9
+-	dc.b	"                                        "	; $494D1
+-	dc.b	"                                        "	; $494F9
+-	dc.b	" REMEMBER! THE ADDY FOR                 "	; $49521
+-	dc.b	" JOINING                                "	; $49549
+-	dc.b	" SWAPPING        q-----------------w    "	; $49571
+-	dc.b	" FRIENDSHIP      e VIC/STAGE       e    "	; $49599
+-	dc.b	" ARTICLES        e P.K. 147        e    "	; $495C1
+-	dc.b	" NEWS            e ACIBADEM 81020  e    "	; $495E9
+-	dc.b	" FREE ADS        e ISTANBUL        e    "	; $49611
+-	dc.b	"                 e TURKEY          e    "	; $49639
+-	dc.b	"                 a-----------------s    "	; $49661
+-	dc.b	0						; $49689  page end
++	dc.b	"                                        "
++	dc.b	"           z LEARN TO CODE x            "
++	dc.b	"                                        "
++	dc.b	"   WANT TO WRITE YOUR OWN DEMO BUT      "
++	dc.b	"   DO NOT KNOW WHERE TO START?          "
++	dc.b	"                                        "
++	dc.b	"              GO AND WATCH              "
++	dc.b	"                                        "
++	dc.b	"            P H A Z E 1 0 1             "
++	dc.b	"                                        "
++	dc.b	"             LIVE ON TWITCH             "
++	dc.b	"                                        "
++	dc.b	"   RETRO CODING SESSIONS ON AMIGA AND   "
++	dc.b	"   OTHER OLD IRONS, FROM THE VERY       "
++	dc.b	"   FIRST LINE OF ASSEMBLY.              "
++	dc.b	0
+ 
+-; ---------------- STAGE7: page 7, 10 rows ----------------
++; ---------------- STAGE7: 14 righe ----------------
+ STAGE7:
+-	dc.b	"                                        "	; $4968A
+-	dc.b	"                                        "	; $496B2
+-	dc.b	"                                        "	; $496DA
+-	dc.b	"                                        "	; $49702
+-	dc.b	"                                        "	; $4972A
+-	dc.b	"        z  G R E E T I N G S  x         "	; $49752
+-	dc.b	"                                        "	; $4977A
+-	dc.b	"     TO ALL MY FRIENDS NiCONTACTS       "	; $497A2
+-	dc.b	"         TO ALL GROUPMEMBERS            "	; $497CA
+-	dc.b	"     AND OF COURSE TO  B L O O D Y      "	; $497F2
+-	dc.b	0						; $4981A  page end
++	dc.b	"                                        "
++	dc.b	"              z CREDITS x               "
++	dc.b	"                                        "
++	dc.b	"   ORIGINAL SWAPTRO 1992 ..... STAGE    "
++	dc.b	"   ORIGINAL CODE .... KRIS OF REBELS    "
++	dc.b	"   ORIGINAL MUSIC ... GIN OF CARNAGE    "
++	dc.b	"                                        "
++	dc.b	"   NEW ARTWORK ......... SWT            "
++	dc.b	"   REVERSE ENGINEERING, REBUILD         "
++	dc.b	"   AND NEW CODE ....... OZZYBOSHI       "
++	dc.b	"                                        "
++	dc.b	"   BIG RESPECT TO STAGE. THIS WHOLE     "
++	dc.b	"   DISK EXISTS BECAUSE OF THE CODE      "
++	dc.b	"   I LEARNED FROM THEIRS.               "
++	dc.b	0
+ 
+-; ---------------- STAGE8: page 8, 11 rows ----------------
++; ---------------- STAGE8: 16 righe ----------------
+ STAGE8:
+-	dc.b	"                                        "	; $4981B
+-	dc.b	"                                        "	; $49843
+-	dc.b	"                                        "	; $4986B
+-	dc.b	"                                        "	; $49893
+-	dc.b	"       NOW ITiS TIME FOR CREDITS        "	; $498BB
+-	dc.b	"                                        "	; $498E3
+-	dc.b	"  MUSIC....................GIN/CARNAGE  "	; $4990B
+-	dc.b	"                                        "	; $49933
+-	dc.b	"  GRAPHICS.....VIC/STAGE & KRIS/REBELS  "	; $4995B
+-	dc.b	"                                        "	; $49983
+-	dc.b	"  CODING...................KRIS/REBELS  "	; $499AB
+-	dc.b	0						; $499D3  page end
++	dc.b	"                                        "
++	dc.b	"             z GREETINGS x              "
++	dc.b	"                                        "
++	dc.b	"    PHAZE101 - PELLICUS - RETROLAIR     "
++	dc.b	"        ALL THE RESISTANCE CREW         "
++	dc.b	"         AND THE WHOLE STAFF OF         "
++	dc.b	"        PASSIONE AMIGA MAGAZINE         "
++	dc.b	"                                        "
++	dc.b	"   WANT TO WRITE ME A REAL LETTER?      "
++	dc.b	"   PAPER, STAMP, POSTBOX, LIKE 1992:    "
++	dc.b	"                                        "
++	dc.b	"   MY ADDRESS IS ON THE DISK LABEL.     "
++	dc.b	"   IF YOU GOT THIS AS A COPY, ASK THE   "
++	dc.b	"   FRIEND WHO GAVE IT TO YOU.           "
++	dc.b	"      COPY THIS DISK.  PASS IT ON.      "
++	dc.b	"                                        "
++	dc.b	0
++
+ 
+ TEXT1: DC.L	$41424344,$45464748 ;499d4
+ 	DC.L	$494a4b4c,$4d4e4f50,$51525354,$55565758 ;499dc
+-- 
+2.43.0
+
