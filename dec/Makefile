@@ -18,6 +18,7 @@ patchludoversion: patch
 
 patchresistanceversion: patch
 	git apply resistanceversion/patches/0001-resistance-logo-added.patch
+	git apply resistanceversion/patches/0002-add-resistance-background.patch
 
 patchcarloversion: patch
 	git apply carloversion/patches/0001-add-carlo-banners.patch
@@ -45,6 +46,7 @@ unpatch:
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
 
 unpatchresistanceversion:
+	git apply -R resistanceversion/patches/0002-add-resistance-background.patch
 	git apply -R resistanceversion/patches/0001-resistance-logo-added.patch
 	$(MAKE) unpatch
 
