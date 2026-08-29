@@ -21,7 +21,7 @@ patchresistanceversion: patch
 	git apply resistanceversion/patches/0002-add-resistance-background.patch
 	git apply resistanceversion/patches/0003-rse-banners-added.patch
 	git apply resistanceversion/patches/0004-new-text.patch
-
+	git apply resistanceversion/patches/0005-makefile-for-resistance.patch
 patchcarloversion: patch
 	git apply carloversion/patches/0001-add-carlo-banners.patch
 	git apply carloversion/patches/0002-canvas-with-skull.patch
@@ -48,6 +48,7 @@ unpatch:
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
 
 unpatchresistanceversion:
+	git apply -R resistanceversion/patches/0005-makefile-for-resistance.patch
 	git apply -R resistanceversion/patches/0004-new-text.patch
 	git apply -R resistanceversion/patches/0003-rse-banners-added.patch
 	git apply -R resistanceversion/patches/0002-add-resistance-background.patch

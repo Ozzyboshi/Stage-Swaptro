@@ -1,0 +1,25 @@
+From 27e746f062fe0af33d0f024a731556296650f509 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Sat, 29 Aug 2026 23:36:02 +0200
+Subject: [PATCH] makefile for resistance
+
+---
+ dec/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dec/Makefile b/dec/Makefile
+index eefc701..48dbd5e 100644
+--- a/dec/Makefile
++++ b/dec/Makefile
+@@ -6,7 +6,7 @@ all:
+ 	vlink -bamigahunk -o ./6_ks13 -s  ./6ks13.o
+ 
+ floppy:
+-	exe2adf -i 6_ks13 -a stage-swaptro_13.adf
++	exe2adf -i 6_ks13 -d resistanceversion/code -l resistance-swaptro_13.adf -a resistance-swaptro_13.adf
+ 
+ patch:
+ 	git apply patches/0001-Fix-colors-in-bottom-bar.patch
+-- 
+2.43.0
+
