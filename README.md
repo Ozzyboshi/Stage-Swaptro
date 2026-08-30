@@ -144,6 +144,20 @@ To build a new patch I used git using the following procedure:
 - Add the patch file to the list inside the makefile patch: directive (at the bottom) with git apply <name of file>
 - Add the patch file to the list inside the makefie unpatch: directive (at the top) with git apply -R <name of file>
 
+## Versions
+
+In this repo you will find the following subfolders:
+- dec/carloversion
+- dec/italodisco
+- dec/ludoversion
+- dec/resistanceversion
+
+  Each of them contains some patches meant to compile a different "version" of the swaptro.
+  This is usually a change of assets (graphics and music).
+  Each of the above subfolders have a patches subdirectory with various ".patch files", you can apply them with ```git apply filename.patch``` following the right order.
+  The Makefile already have the facilities to do automatic patch apply, compiling, and creating the floppy (if you have the right tools).
+  The italodisco version is a special project meant to transform the swaptro into a launcher for old intros, visit https://www.trinityhq.eu/ if you want to know more.
+
 ## Memory Map
 
 | File offset | Address | Size | Contents |
