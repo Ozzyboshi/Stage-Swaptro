@@ -25,14 +25,14 @@ STAGE0:
 	dc.b	"e F1 - THREESYSTEM -HORROR(FIXED)  i89 e"
  	dc.b	"e F2 - THE OUTSIDER                i89 e"
 	dc.b	"e F3 - 4WARD -BORN TO RISE HELL    i93 e"
- 	dc.b	"e F4 - AGGRESSORS/ORACLE-ALLEANCE  i90 e"
+ 	dc.b	"e F4 - AGGRESSORS/ORACLE-ALLEANCE& i90 e"
  	dc.b	"e F5 - DIVINA -HITENSION NEVERBORN i90 e"
-	dc.b	"e F6 - DREAMS OF POWER -DEMO &     i90 e"
+	dc.b	"e F6 - DREAMS OF POWER -DEMO &&    i90 e"
 	dc.b	"e F7 - INSIDER -INTRO              i89 e"
 	dc.b	"e F8 - TRAUMA -FIRST DEMO          i91 e"
 	dc.b	"e F9 - VEGA -OFFICIAL PLASMA       i91 e"
 	dc.b	"a--------------------------------------s"
-	dc.b	"       & REQUIRES SOME FAST RAM         "
+	dc.b	"  & REQUIRES SOME FAST RAM && KICK 1.3  "
 	dc.b	" PRESS SPACE (THE LONG ONE) FOR CREDITS "	
  	dc.b	0						;
  			 
@@ -50,9 +50,9 @@ STAGE1:
 	dc.b	"                        LEET IS SHIT    "	; $48BE5
 	dc.b	"                                        "	; $48C0D
 	dc.b	" Z3K/TRINITY - GFX, INTRO SELECTION &   "	; $48C35
-	dc.b	"                   PRESERVATION, TEXTS  "  ; $48C5D
+	dc.b	"                   PRESERVATION, TEXTS  " 	; $48C5D
 	dc.b	"                                        "	; $48C85
-	dc.b	"  ALL ITALIANS FELT IN LOVE WITH AMIGA  " 	; $48CAD
+	dc.b	" ALL OF YOU WHO FELT IN LOVE WITH AMIGA " 	; $48CAD
 	dc.b	"                                        "	; $48CD5
 	dc.b	"                                        "	; $48CFD
 	dc.b	"  PRESS THE LONG ONE FOR THE CONTACTS   "	; $48D25
@@ -63,7 +63,7 @@ STAGE2:
 ;            1234567890123456789012345678901234567890
 	dc.b	" WANNA SEE HOW ALL THIS WAS DONE ?      "	; $48D4E
 	dc.b	"                                        "	; $48D76
-	dc.b	" z GITHUB.COM/OZZYBOSHI/STAHE-SWAPTRO x "	; $48D9E
+	dc.b	" z GITHUB.COM/OZZYBOSHI/STAGE-SWAPTRO x "	; $48D9E
 	dc.b	"                                        "	; $48DC6
 	dc.b	" WANNA SEE PREVIOUS ITALODISCO VOLUMES? "	; $48DEE
 	dc.b	"                                        "	; $48E16
@@ -71,8 +71,8 @@ STAGE2:
 	dc.b	"                         z DEMOZOO.ORG x"	; $48E66
 	dc.b	"                                        "	; $48E8E
 	dc.b	" WANNA CONTRIBUTE TO ITALODISCO WITH    "	; $48EB6
-	dc.b	" SOME OLD DISKS YOU FORGOT IN GARAGE,   "	; $48EDE
-	dc.b	" INTRO OR MOD YOU NEVER RELEASED?       "	; $48F06
+	dc.b	" SOME OLD DISKS FORGOTTEN IN THE ATTIC, "	; $48EDE
+	dc.b	" INTRO OR MOD (YOU) NEVER RELEASED ?    "	; $48F06
 	dc.b	"                                        "	; $48F2E
 	dc.b	" MAILTO: z ITALO(A)TRINITYHQ.EU x       "	; $48F56
 	dc.b	"                                        "	; $48F7E
@@ -89,10 +89,10 @@ STAGE3:
 	dc.b	"CAPITAN GIACO, SODA7, LYNX, EVERYONE WHO"	; $4906F
 	dc.b	"   CONTRIBUTED TO SUCH A GREAT PARTY    "	; $49097
 	dc.b	"  PELLICUS, PRINCE/PHAZE 101, HOUNDDOG, "	; $490BF
-	dc.b	" PAN, MACNO, KFD, THE DARK CODER, FAROX "	; $490E7
-	dc.b	"                 A N D                  "	; $4910F
+	dc.b	" PAN, MACNO, KFD, THE DARK CODER, FAROX,"	; $490E7
+	dc.b	" EVERYONE AT PASSIONE AND PIANETA AMIGA "	; $4910F
 	dc.b	"           EVERYONE I FORGOT            "	; $49137
-	dc.b	" SINCE IiM PAST 32HEX AND MY AGNUS IS   "	; $4915F
+	dc.b	"  SINCE IiM PAST 32HEX AND MY AGNUS IS  "	; $4915F
 	dc.b	" OLD AND CANiT ADDRESS ANY MORE CHIP RAM"  ; $49187
 	dc.b	" EXTRA SPECIAL THANKS TO OZZY WHO SAVED "	; $491AF
 	dc.b	"THE DAY, ITALODISCO AND SOME HARDWARE OF"	; $491D7
