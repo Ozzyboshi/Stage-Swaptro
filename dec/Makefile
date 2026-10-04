@@ -43,6 +43,8 @@ patchitalodisco: patch
 	git apply italodisco/patches/0011-new-logo-image-for-italodisco.patch
 	git apply italodisco/patches/0012-new-banners-for-italodisco.patch
 	git apply italodisco/patches/0013-new-text.patch
+	git apply italodisco/patches/0014-fix-module-init-writing-past-the-end-of-the-chip-hunk.patch
+	git apply italodisco/patches/0015-keep-the-seglist-in-memory-in-the-selector.patch
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -69,6 +71,8 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0015-keep-the-seglist-in-memory-in-the-selector.patch
+	git apply -R italodisco/patches/0014-fix-module-init-writing-past-the-end-of-the-chip-hunk.patch
 	git apply -R italodisco/patches/0013-new-text.patch
 	git apply -R italodisco/patches/0012-new-banners-for-italodisco.patch
 	git apply -R italodisco/patches/0011-new-logo-image-for-italodisco.patch

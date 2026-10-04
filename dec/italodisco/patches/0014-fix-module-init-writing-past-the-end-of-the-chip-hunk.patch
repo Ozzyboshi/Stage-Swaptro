@@ -1,0 +1,36 @@
+From a8e1a2835383bef6489ee50bfbe2872af62f0493 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Sun, 4 Oct 2026 18:24:07 +0200
+Subject: [PATCH 14/15] fix module init writing past the end of the chip hunk
+
+The replayer init (SUB_49BE0) does CLR.L at the start of every sample,
+the empty ones at the end included. The new module ends exactly at the
+end of data_34000_to_48000.bin, so that write lands 4 bytes past the
+CODE2 hunk, on the memory header of the next allocation: UnLoadSeg can
+no longer free the 60 KB BSS_C hunk. Pad the hunk so the write stays
+inside it.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ dec/6.s | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/dec/6.s b/dec/6.s
+index 200aa32..5366981 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -2027,4 +2027,10 @@ BITPLANES:
+ 	SECTION	"CODE2",CODE_C
+ MOD:
+ 	incbin "data_34000_to_48000.bin"
++	; the replayer init (SUB_49BE0) does CLR.L at the start of every
++	; sample, the empty ones at the end included: with a module that
++	; ends exactly at the end of the file that write lands 4 bytes past
++	; this hunk, on the memory header of the next one, and UnLoadSeg
++	; can no longer give the chip RAM back. Keep it inside the hunk.
++	ds.l	2
+ 	END
+\ No newline at end of file
+-- 
+2.43.0
+

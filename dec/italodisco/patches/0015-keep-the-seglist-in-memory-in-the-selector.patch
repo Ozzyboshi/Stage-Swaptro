@@ -1,0 +1,51 @@
+From 5b42256727ecb98ff71ee23a5546d2cfe427a598 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Sun, 4 Oct 2026 18:24:07 +0200
+Subject: [PATCH 15/15] keep the seglist in memory in the selector
+
+The Shrinkler decrunch header trashes D7, where RUNPROG kept the
+segment list while the program ran. UnLoadSeg then got garbage and the
+whole swaptro (~149 KB of chip RAM) was never freed, so horror13 (a
+single 337 KB chip hunk) could not be loaded on a 512K chip machine.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ dec/selector.s | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/dec/selector.s b/dec/selector.s
+index 49c6719..381a99b 100644
+--- a/dec/selector.s
++++ b/dec/selector.s
+@@ -71,7 +71,7 @@ RUNPROG:
+ 	movea.l	DOSBASE(pc),a6
+ 	move.l	a0,d1
+ 	jsr	LVO_LOADSEG(a6)
+-	move.l	d0,d7			; BPTR to the segment list
++	move.l	d0,SEGLIST		; BPTR to the segment list
+ 	beq.s	RP_FAIL
+ 	lsl.l	#2,d0			; BPTR -> byte address
+ 	addq.l	#4,d0			; skip the next-segment pointer
+@@ -81,7 +81,10 @@ RUNPROG:
+ 	jsr	(a4)			; run it
+ 	move.l	d0,d6			; keep the exit code
+ 	movea.l	DOSBASE(pc),a6
+-	move.l	d7,d1
++	move.l	SEGLIST(pc),d1		; not kept in a register: the
++					; Shrinkler decrunch header trashes
++					; D7, and UnLoadSeg of garbage leaves
++					; the whole program in chip RAM
+ 	jsr	LVO_UNLOADSEG(a6)
+ 	move.l	d6,d0
+ 	bra.s	RP_OUT
+@@ -147,4 +150,6 @@ NPROGS	EQU	(*-PROGTAB)/4
+ 
+ DOSBASE:
+ 	dc.l	0
++SEGLIST:
++	dc.l	0
+ 	END
+\ No newline at end of file
+-- 
+2.43.0
+
