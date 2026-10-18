@@ -47,6 +47,7 @@ patchitalodisco: patch
 	git apply italodisco/patches/0015-keep-the-seglist-in-memory-in-the-selector.patch
 	git apply italodisco/patches/0016-replace-Aggressors-Oracle-NewAlleance-with-fixed-oracle13.patch
 	git apply italodisco/patches/0017-outsider-patched.patch
+	git apply italodisco/patches/0018-Divina-patched.patch
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -73,6 +74,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0018-Divina-patched.patch
 	git apply -R italodisco/patches/0017-outsider-patched.patch
 	git apply -R italodisco/patches/0016-replace-Aggressors-Oracle-NewAlleance-with-fixed-oracle13.patch
 	git apply -R italodisco/patches/0015-keep-the-seglist-in-memory-in-the-selector.patch
