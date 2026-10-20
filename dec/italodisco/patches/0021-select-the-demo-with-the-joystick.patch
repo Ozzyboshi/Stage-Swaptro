@@ -1,0 +1,228 @@
+From 6f1a381819e1ecaff118688e90ae2ee8b27acd71 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Tue, 20 Oct 2026 09:03:15 +0200
+Subject: [PATCH] select the demo with the joystick
+
+Joystick in port 2, a CD32 pad too (red button = fire), so the CD can
+be used on a CD32 without a keyboard. On the menu page up/down move a
+bar over the demo list, fire starts the selected demo (same code as
+F1..F9) and right goes on to the credits like SPACE. On the other
+pages fire or right go on to the next page, also while the page is
+still being typed, as SPACE does. While the menu is typed the joystick
+is ignored, so an early fire does not skip it. Up/down repeat while
+held. The keyboard works as before.
+
+The bar is the 5th bitplane flipped under the selected row, inside the
+frame: the canvas shows through it in colours 16-23, which were unused
+and now hold the canvas palette at half brightness.
+
+Tested in FS-UAE on CD32 (KS 40.60, CDTV.TM ISO) and A500 KS 1.3.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ dec/6.s | 146 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 143 insertions(+), 3 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 5366981..1013020 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -21,6 +21,7 @@ AUD3VOL	EQU	$DFF0D8
+ 
+ ; --- keyboard ---
+ CIAASDR		EQU	$BFEC01
++JOY1DAT		EQU	$DFF00C
+ KEY_SPACE	EQU	$40
+ KEY_ESC		EQU	$45
+ KEY_F1		EQU	$50		; F1..F10 = $50..$59
+@@ -38,6 +39,7 @@ SECSTRT_0:
+ 	not.b	d0
+ 	ror.b	#1,d0
+ 	move.b	d0,LASTRAW
++	st	JOYLAST			; joystick: wait for a release first
+ 
+ 	JSR	SUB_49BE0		;48004: 4eb900049be0 remmed by me
+ 	BSR.W	CLEARBPL		;48000: 61000818
+@@ -46,8 +48,9 @@ SECSTRT_0:
+ PAGELOOP:
+ 	;MOVEA.L	#$0004884c,A1		;48010: 227c0004884c
+ 	movea.l #STAGE0,A1		;48010: 227c0004884c
++	move.b	#1,MENUON		; menu being typed: joystick ignored
+ 	BSR.W	SUB_48314		;48016: 610002fc
+-	BSR.W	LAB_4826A		;4801a: 6100024e
++	BSR.W	MENUWAIT		; LAB_4826A with the joystick bar
+ 	BSR.W	SUB_48106		;4801e: 610000e6
+ 	BSR.W	CLEARBPL		;48022: 610007f6
+ 	;MOVE.W	#$0000,LAB_486A6	;48026: 33fc0000000486a6
+@@ -408,6 +411,7 @@ LAB_4826A:
+ LAB_482C2:
+ 	BSR.W	WAITVBLANK		;482c2: 6100056a
+ 	BSR.W	CHECKKEYS
++	BSR.W	CHECKJOY
+ 	TST.B	KEYACTION
+ 	BEQ.W	LAB_4826A		;no key pressed, continue
+ 	CLR.B	KEYACTION
+@@ -445,6 +449,7 @@ LAB_4832C:
+ 	BEQ.S	LAB_4837A		;48332: 6746
+ 	JSR	WAITVBLANK		;48334: 4eb90004882e
+ 	BSR.W	CHECKKEYS
++	BSR.W	CHECKJOY
+ 	bsr.w SCROLL_CANVAS
+ 	;ADDI.W	#$0028,LAB_4868E	;4833a: 067900280004868e
+ 	;ADDI.W	#$0028,LAB_48696	;48342: 0679002800048696
+@@ -615,8 +620,8 @@ LAB_4867E:
+ 	DC.L	$01880fe4,$018a0fbe,$018c0abc,$018e068a
+ 	DC.L	$01900FFF,$01920FFF,$01940FFF,$01960fff
+ 	DC.L	$01980FFF,$019a0fff,$019c0FFF,$019e0fff
+-	DC.L	$01a00aaa,$01a20d0e,$01a40fbf,$01a60fef
+-	DC.L	$01a80ddd,$01aa0fff,$01ac0c0d,$01ae0fcf
++	DC.L	$01a00000,$01a20613,$01a40742,$01a60311	; colours 16-23: the canvas
++	DC.L	$01a80672,$01aa0757,$01ac0556,$01ae0345	; at half brightness, under the joystick bar
+ 	DC.L	$01b00fff,$01b20fff,$01b40fff,$01b60fff
+ 	DC.L	$01b80fff,$01ba0fff,$01bc0fff,$01be0fff
+ BPLPTR_CANVAS: ; canvas start block
+@@ -734,6 +739,141 @@ CK_DONE:
+ 	movem.l	(a7)+,d0-d1
+ 	rts
+ 
++; ==================================================================
++; CHECKJOY - joystick in port 2, a CD32 pad too (red button = fire).
++; Menu page: up/down move the bar, fire starts that demo, right goes
++; on to the next page like SPACE. Other pages: fire or right go on,
++; also while the page is still being typed, as SPACE does. While the
++; menu is typed the joystick is ignored (a fire meant for the menu
++; would otherwise skip it). Up/down repeat while held.
++; ==================================================================
++JOY_UP		EQU	0
++JOY_DOWN	EQU	1
++JOY_RIGHT	EQU	3
++JOY_FIRE	EQU	4
++JOY_DELAY	EQU	12		; loop passes before the first repeat
++JOY_RATE	EQU	5		; loop passes between repeats
++
++CHECKJOY:
++	movem.l	d0-d2,-(a7)
++	moveq	#0,d1			; D1 = what is held now
++	move.w	JOY1DAT,d0
++	btst	#1,d0
++	beq.s	.noright
++	bset	#JOY_RIGHT,d1
++.noright:
++	move.w	d0,d2
++	lsr.w	#1,d2
++	eor.w	d0,d2			; bit 0 = down, bit 8 = up
++	btst	#0,d2
++	beq.s	.nodown
++	bset	#JOY_DOWN,d1
++.nodown:
++	btst	#8,d2
++	beq.s	.noup
++	bset	#JOY_UP,d1
++.noup:
++	btst	#7,EXT_BFE001		; /FIR1, active low
++	bne.s	.nofire
++	bset	#JOY_FIRE,d1
++.nofire:
++	move.b	JOYLAST,d2
++	move.b	d1,JOYLAST
++	not.b	d2
++	and.b	d1,d2			; D2 = just pressed
++	move.b	d1,d0
++	andi.b	#(1<<JOY_UP)|(1<<JOY_DOWN),d0
++	beq.s	.norep
++	tst.b	d2
++	beq.s	.held
++	move.b	#JOY_DELAY,JOYREP
++	bra.s	.norep
++.held:
++	subq.b	#1,JOYREP
++	bne.s	.norep
++	move.b	#JOY_RATE,JOYREP
++	or.b	d0,d2			; repeat up/down
++.norep:
++	tst.b	MENUON
++	beq.s	.other			; 0: other page
++	bpl.s	.done			; 1: menu being typed
++	btst	#JOY_FIRE,d2
++	bne.s	.fire
++	btst	#JOY_UP,d2
++	bne.s	.up
++	btst	#JOY_DOWN,d2
++	bne.s	.down
++.other:
++	andi.b	#(1<<JOY_FIRE)|(1<<JOY_RIGHT),d2
++	beq.s	.done
++	move.b	#1,KEYACTION		; next page
++.done:
++	movem.l	(a7)+,d0-d2
++	rts
++.up:
++	bsr.w	BARTOGGLE		; off
++	subq.b	#1,JOYSEL
++	bpl.s	.moved
++	move.b	#MENU_ITEMS-1,JOYSEL
++	bra.s	.moved
++.down:
++	bsr.w	BARTOGGLE		; off
++	addq.b	#1,JOYSEL
++	cmpi.b	#MENU_ITEMS,JOYSEL
++	blo.s	.moved
++	clr.b	JOYSEL
++.moved:
++	bsr.w	BARTOGGLE		; on, on the new row
++	bra.s	.done
++.fire:
++	moveq	#0,d0
++	move.b	JOYSEL,d0
++	addq.b	#1,d0			; same code as F1..F9
++	move.b	d0,CHOICE
++	movea.l	MAINSP,a7		; trash stack, as CHECKKEYS does
++	bra.w	DEMOEND
++
++; MENUWAIT - wait on the menu page with the bar shown
++MENUWAIT:
++	bsr.s	BARTOGGLE
++	st	MENUON
++	bsr.w	LAB_4826A
++	clr.b	MENUON
++					; and on into BARTOGGLE: the page
++					; scrolls out without the bar
++
++; BARTOGGLE - flip the 5th bitplane under the text of the selected
++; menu row, inside the frame: there the canvas shows through in
++; colours 16-23 and the text (4th bitplane) in colours 24-31.
++MENU_ROW	EQU	4		; text row of F1 in STAGE0
++MENU_ITEMS	EQU	9		; F1..F9
++BARTOGGLE:
++	movem.l	d0-d1/a0,-(a7)
++	moveq	#0,d0
++	move.b	JOYSEL,d0
++	addq.w	#MENU_ROW,d0
++	mulu	#$140,d0		; 8 lines of 40 bytes per text row
++	lea	BITPLANES+$2800+1,a0	; 5th bitplane, column 1
++	adda.l	d0,a0
++	moveq	#8-1,d1
++.line:
++	moveq	#38-1,d0		; columns 1..38
++.col:
++	not.b	(a0)+
++	dbf	d0,.col
++	addq.l	#2,a0
++	dbf	d1,.line
++	movem.l	(a7)+,d0-d1/a0
++	rts
++
++JOYLAST:
++	dc.b	0
++JOYREP:
++	dc.b	0
++JOYSEL:
++	dc.b	0			; selected menu row, 0 = F1
++MENUON:
++	dc.b	0			; 0 other page, 1 menu typed, -1 menu
+ LASTRAW:
+ 	dc.b	0
+ KEYACTION:
+-- 
+2.43.0
+
