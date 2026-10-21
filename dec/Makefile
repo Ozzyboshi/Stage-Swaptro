@@ -52,6 +52,7 @@ patchitalodisco: patch
 	git apply italodisco/patches/0020-make-cdrom-bootable-CD-image-for-CDTV-and-CD32.patch
 	git apply italodisco/patches/0021-select-the-demo-with-the-joystick.patch
 	git apply italodisco/patches/0022-replace-TRAUMA-FirstDemo-with-the-relocatable-rebuild.patch
+	git apply italodisco/patches/0023-selector-back-to-the-menu-when-a-program-cannot-be-loaded.patch
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -78,6 +79,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0023-selector-back-to-the-menu-when-a-program-cannot-be-loaded.patch
 	git apply -R italodisco/patches/0022-replace-TRAUMA-FirstDemo-with-the-relocatable-rebuild.patch
 	git apply -R italodisco/patches/0021-select-the-demo-with-the-joystick.patch
 	git apply -R italodisco/patches/0020-make-cdrom-bootable-CD-image-for-CDTV-and-CD32.patch
