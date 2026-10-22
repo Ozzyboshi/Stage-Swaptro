@@ -56,6 +56,7 @@ patchitalodisco: patch
 	git apply italodisco/patches/0024-AGAFIX-for-divina-and-horror13.patch
 	git apply italodisco/patches/0025-remove-the-fast-RAM-note-from-the-menu.patch
 	git apply italodisco/patches/0026-floppy-Shrinkler-in-overlap-mode-to-need-less-memory.patch
+	git apply italodisco/patches/0027-new-dream.patch
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -82,6 +83,7 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
+	git apply -R italodisco/patches/0027-new-dream.patch
 	git apply -R italodisco/patches/0026-floppy-Shrinkler-in-overlap-mode-to-need-less-memory.patch
 	git apply -R italodisco/patches/0025-remove-the-fast-RAM-note-from-the-menu.patch
 	git apply -R italodisco/patches/0024-AGAFIX-for-divina-and-horror13.patch
