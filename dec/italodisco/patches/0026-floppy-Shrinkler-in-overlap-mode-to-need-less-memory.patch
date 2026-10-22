@@ -1,0 +1,56 @@
+From f657d6645cef17952b998a316f4f5811c775afcd Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Thu, 22 Oct 2026 17:56:20 +0200
+Subject: [PATCH] floppy: Shrinkler in overlap mode, to need less memory
+
+Without -o the Shrinkler header keeps the packed data in a hunk of its
+own, which stays allocated while the demo runs: every demo needed its
+own size plus the packed size. With -o the packed data is unpacked in
+place, inside the hunks of the program, so a demo needs no more memory
+than its unpacked version: horror13 515 -> 337 KB, TRAUMA 324 -> 238 KB,
+4Ward 268 -> 194 KB, Divina 256 -> 192 KB. The files on the disk have
+the same size.
+
+On a machine with only chip RAM and hard disks mounted (A600, 1 MB
+chip, no fast RAM) there was not always room for the packed copy, and
+the menu turned red (the program could not be loaded).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ dec/Makefile | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/dec/Makefile b/dec/Makefile
+index 4fc8ec3..9faf764 100644
+--- a/dec/Makefile
++++ b/dec/Makefile
+@@ -10,16 +10,16 @@ all:
+ 
+ floppy:
+ 	mkdir -p compressedtmp
+-	Shrinkler --flash DFF180 6_ks13 compressedtmp/6_ks13
+-	Shrinkler --flash DFF180 horror13 compressedtmp/horror13
+-	Shrinkler --flash DFF180 THE_OUTSIDER compressedtmp/THE_OUTSIDER
+-	Shrinkler --flash DFF180 '4Ward-BornToRaiseTheHell - 93' 'compressedtmp/4Ward-BornToRaiseTheHell - 93'
+-	Shrinkler --flash DFF180 'Aggressors&Oracle-NewAlleance' 'compressedtmp/Aggressors&Oracle-NewAlleance'
+-	Shrinkler --flash DFF180 'Divina-HighTensionNeverBorn' 'compressedtmp/Divina-HighTensionNeverBorn'
+-	Shrinkler --flash DFF180 'DreamsOfPower-Born' 'compressedtmp/DreamsOfPower-Born'
+-	Shrinkler --flash DFF180 'Insider intro 1989' 'compressedtmp/Insider intro 1989'
+-	Shrinkler --flash DFF180 'TRAUMA-FirstDemo 19.05.91' 'compressedtmp/TRAUMA-FirstDemo 19.05.91'
+-	Shrinkler --flash DFF180 'VEGA-Plasma1st' 'compressedtmp/VEGA-Plasma1st'
++	Shrinkler -o --flash DFF180 6_ks13 compressedtmp/6_ks13
++	Shrinkler -o --flash DFF180 horror13 compressedtmp/horror13
++	Shrinkler -o --flash DFF180 THE_OUTSIDER compressedtmp/THE_OUTSIDER
++	Shrinkler -o --flash DFF180 '4Ward-BornToRaiseTheHell - 93' 'compressedtmp/4Ward-BornToRaiseTheHell - 93'
++	Shrinkler -o --flash DFF180 'Aggressors&Oracle-NewAlleance' 'compressedtmp/Aggressors&Oracle-NewAlleance'
++	Shrinkler -o --flash DFF180 'Divina-HighTensionNeverBorn' 'compressedtmp/Divina-HighTensionNeverBorn'
++	Shrinkler -o --flash DFF180 'DreamsOfPower-Born' 'compressedtmp/DreamsOfPower-Born'
++	Shrinkler -o --flash DFF180 'Insider intro 1989' 'compressedtmp/Insider intro 1989'
++	Shrinkler -o --flash DFF180 'TRAUMA-FirstDemo 19.05.91' 'compressedtmp/TRAUMA-FirstDemo 19.05.91'
++	Shrinkler -o --flash DFF180 'VEGA-Plasma1st' 'compressedtmp/VEGA-Plasma1st'
+ 	gadf -i selector -S startup-sequence compressedtmp/6_ks13 compressedtmp/horror13 compressedtmp/THE_OUTSIDER 'compressedtmp/4Ward-BornToRaiseTheHell - 93' 'compressedtmp/Aggressors&Oracle-NewAlleance' 'compressedtmp/Divina-HighTensionNeverBorn' 'compressedtmp/DreamsOfPower-Born' 'compressedtmp/Insider intro 1989' 'compressedtmp/TRAUMA-FirstDemo 19.05.91' 'compressedtmp/VEGA-Plasma1st'
+ 	rm -rf compressedtmp
+ 
+-- 
+2.43.0
+
