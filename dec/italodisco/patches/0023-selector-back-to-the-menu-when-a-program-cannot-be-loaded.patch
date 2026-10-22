@@ -1,0 +1,73 @@
+From 385280769f1b1d9229ad5e235b920b5fc726de23 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Wed, 21 Oct 2026 19:51:04 +0200
+Subject: [PATCH] selector: back to the menu when a program cannot be loaded
+
+When LoadSeg failed (for example not enough chip RAM, with hard disks
+mounted and no fast RAM) the selector went straight to REBOOT, which
+looked like a crash right after choosing the demo. Now the screen turns
+red for a second and the swaptro starts again, so another demo can be
+chosen. A program that loads still ends with a reboot, as before.
+
+The failure is told by SEGLIST being 0 rather than by the exit code,
+since a program may well return -1.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ dec/selector.s | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/dec/selector.s b/dec/selector.s
+index 381a99b..cc9667f 100644
+--- a/dec/selector.s
++++ b/dec/selector.s
+@@ -3,7 +3,8 @@
+ ;
+ ; Runs the swaptro as a subroutine, reads the return code it leaves
+ ; in D0, unloads it, then loads and runs the program that the code
+-; selects, and finally reboots.
++; selects, and finally reboots. If the program cannot be loaded, the
++; screen turns red for a second and the swaptro starts again.
+ ;
+ ; Nothing resident is needed: the swaptro is a child of this program,
+ ; so its exit code comes straight back in D0.
+@@ -49,6 +50,11 @@ START:
+ 	tst.b	(a0)
+ 	beq.s	.nothing		; empty slot
+ 	bsr.w	RUNPROG
++	tst.l	SEGLIST			; 0: the program did not load (not
++	bne.s	.ran			; enough memory, missing file...)
++	bsr.w	LOADFAIL		; red screen for a second,
++	bra.s	.havedos		; then back to the menu
++.ran:
+ 	bsr.w	REBOOT			; does not return
+ .nothing:
+ 	movea.l	SYSBASE,a6
+@@ -94,6 +100,24 @@ RP_OUT:
+ 	movem.l	(a7)+,d2-d7/a2-a6
+ 	rts
+ 
++;-------------------------------------------------------------------
++; LOADFAIL - keeps COLOR00 red for 50 frames, so that a program that
++; could not be loaded does not look like a crash. The copper list of
++; the OS sets COLOR00 again every frame, so it is written all the time.
++;-------------------------------------------------------------------
++LOADFAIL:
++	moveq	#49,d1
++LF_FRAME:
++	move.w	#$0f00,$dff180
++	cmpi.b	#$20,$dff006		; wait for line $20...
++	bne.s	LF_FRAME
++LF_LINE:
++	move.w	#$0f00,$dff180
++	cmpi.b	#$20,$dff006		; ...and for the end of it
++	beq.s	LF_LINE
++	dbf	d1,LF_FRAME
++	rts
++
+ ;-------------------------------------------------------------------
+ ; REBOOT - ColdReboot() when it exists (KS 2.0+), otherwise the
+ ; classic supervisor RESET for 1.2 and 1.3.
+-- 
+2.43.0
+

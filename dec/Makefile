@@ -49,7 +49,12 @@ patchitalodisco: patch
 	git apply italodisco/patches/0017-outsider-patched.patch
 	git apply italodisco/patches/0018-Divina-patched.patch
 	git apply italodisco/patches/0019-4Ward-patched.patch
-	git apply italodisco/patches/0020-AGAFIX-for-divina-and-horror13.patch
+	git apply italodisco/patches/0020-make-cdrom-bootable-CD-image-for-CDTV-and-CD32.patch
+	git apply italodisco/patches/0021-select-the-demo-with-the-joystick.patch
+	git apply italodisco/patches/0022-replace-TRAUMA-FirstDemo-with-the-relocatable-rebuild.patch
+	git apply italodisco/patches/0023-selector-back-to-the-menu-when-a-program-cannot-be-loaded.patch
+	git apply italodisco/patches/0024-AGAFIX-for-divina-and-horror13.patch
+	git apply italodisco/patches/0025-remove-the-fast-RAM-note-from-the-menu.patch
 unpatch:
 	git apply -R patches/0002-fix-copperlist-in-first-line-of-canvas.patch
 	git apply -R patches/0001-Fix-colors-in-bottom-bar.patch
@@ -76,7 +81,12 @@ unpatchcarloversion:
 	$(MAKE) unpatch
 
 unpatchitalodisco:
-	git apply -R italodisco/patches/0020-AGAFIX-for-divina-and-horror13.patch
+	git apply -R italodisco/patches/0025-remove-the-fast-RAM-note-from-the-menu.patch
+	git apply -R italodisco/patches/0024-AGAFIX-for-divina-and-horror13.patch
+	git apply -R italodisco/patches/0023-selector-back-to-the-menu-when-a-program-cannot-be-loaded.patch
+	git apply -R italodisco/patches/0022-replace-TRAUMA-FirstDemo-with-the-relocatable-rebuild.patch
+	git apply -R italodisco/patches/0021-select-the-demo-with-the-joystick.patch
+	git apply -R italodisco/patches/0020-make-cdrom-bootable-CD-image-for-CDTV-and-CD32.patch
 	git apply -R italodisco/patches/0019-4Ward-patched.patch
 	git apply -R italodisco/patches/0018-Divina-patched.patch
 	git apply -R italodisco/patches/0017-outsider-patched.patch

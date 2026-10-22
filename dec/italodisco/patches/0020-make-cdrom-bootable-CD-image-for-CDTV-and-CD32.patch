@@ -1,0 +1,100 @@
+From c0b826027a052919afab1520f8d20b97160a3195 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Sun, 18 Oct 2026 23:11:04 +0200
+Subject: [PATCH] make cdrom: bootable CD image for CDTV and CD32
+
+---
+ dec/Makefile      | 21 +++++++++++++++++++++
+ dec/amigacd_tm.py | 48 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+)
+ create mode 100644 dec/amigacd_tm.py
+
+diff --git a/dec/Makefile b/dec/Makefile
+index bb855d6..9e896f2 100644
+--- a/dec/Makefile
++++ b/dec/Makefile
+@@ -23,6 +23,27 @@ floppy:
+ 	gadf -i selector -S startup-sequence compressedtmp/6_ks13 compressedtmp/horror13 compressedtmp/THE_OUTSIDER 'compressedtmp/4Ward-BornToRaiseTheHell - 93' 'compressedtmp/Aggressors&Oracle-NewAlleance' 'compressedtmp/Divina-HighTensionNeverBorn' 'compressedtmp/DreamsOfPower-Born' 'compressedtmp/Insider intro 1989' 'compressedtmp/TRAUMA-FirstDemo 19.05.91' 'compressedtmp/VEGA-Plasma1st'
+ 	rm -rf compressedtmp
+ 
++# CD image for CDTV and CD32 (one ISO boots on both: CDTV.TM makes the
++# CD32 start in ECS mode). The programs are not packed: there is room on a
++# CD, they load faster and need less memory than with Shrinkler.
++# TMFILE and RMTM are Commodore files from the Amiga Developer CD 2.1:
++#   /CD32/ISO9660Tools_V1.04/ISOCD/CDTV.TM  and  /CDTV/isodevpack-41/iso2/rmtm
++TMFILE ?= CDTV.TM
++RMTM   ?= rmtm
++CDNAME ?= italodisco.iso
++
++cdrom:
++	@test -f '$(TMFILE)' || { echo "missing $(TMFILE) (trademark file, see the comment above the cdrom target)"; exit 1; }
++	@test -f '$(RMTM)' || { echo "missing $(RMTM) (CDTV RMTM command, see the comment above the cdrom target)"; exit 1; }
++	rm -rf cdtmp '$(CDNAME)'
++	mkdir -p cdtmp/S
++	cp selector 6_ks13 horror13 THE_OUTSIDER '4Ward-BornToRaiseTheHell - 93' 'Aggressors&Oracle-NewAlleance' 'Divina-HighTensionNeverBorn' 'DreamsOfPower-Born' 'Insider intro 1989' 'TRAUMA-FirstDemo 19.05.91' 'VEGA-Plasma1st' cdtmp/
++	cp '$(RMTM)' cdtmp/rmtm
++	printf 'rmtm\nselector\n' > cdtmp/S/startup-sequence
++	xorriso -as mkisofs -quiet -o '$(CDNAME)' -V ITALODISCO -sysid CDTV -iso-level 3 -relaxed-filenames -allow-lowercase -l -d -omit-version-number -no-iso-translate cdtmp
++	python3 amigacd_tm.py '$(CDNAME)' '$(TMFILE)'
++	rm -rf cdtmp
++
+ patch:
+ 	git apply patches/0001-Fix-colors-in-bottom-bar.patch
+ 	git apply patches/0002-fix-copperlist-in-first-line-of-canvas.patch
+diff --git a/dec/amigacd_tm.py b/dec/amigacd_tm.py
+new file mode 100644
+index 0000000..f09019b
+--- /dev/null
++++ b/dec/amigacd_tm.py
+@@ -0,0 +1,48 @@
++#!/usr/bin/env python3
++"""Make an ISO9660 image bootable on CDTV / CD32.
++
++The CD filesystem in the CDTV/CD32 ROMs (cdfs.library) takes the volume
++descriptor whose System Identifier is "CDTV", and reads a list of tags
++from its Application Use field (byte 884 of the sector). The "TM" tag
++tells the boot code where the trademark file is: its length and up to
++four sector numbers (a sector number of 0 ends the list). The boot code
++reads the trademark from there and compares it with its own copy.
++
++This script writes the trademark file into the ISO's system area
++starting at sector 1, and adds the TM tag.
++
++usage: amigacd_tm.py image.iso trademark.tm
++"""
++import struct, sys
++
++iso, tmfile = sys.argv[1], sys.argv[2]
++tm = open(tmfile, 'rb').read()
++SECTOR = 2048
++first = 1
++if len(tm) > (16 - first) * SECTOR:
++    sys.exit('trademark file does not fit in the system area')
++with open(iso, 'r+b') as f:
++    f.seek(first * SECTOR)
++    if any(f.read(len(tm))):
++        sys.exit('system area is not empty')
++    f.seek(first * SECTOR)
++    f.write(tm)
++    # find the primary volume descriptor with System Identifier "CDTV"
++    for s in range(16, 32):
++        f.seek(s * SECTOR)
++        vd = f.read(SECTOR)
++        if vd[1:6] != b'CD001':
++            sys.exit('no volume descriptor')
++        if vd[0] == 255:
++            sys.exit('no primary volume descriptor with System Identifier CDTV')
++        if vd[0] == 1 and vd[8:40] == b'CDTV'.ljust(32):
++            break
++    # Application Use: mkisofs/xorriso fill it with spaces; cdfs stops at a
++    # zero tag, so clear it all and write the TM tag
++    f.seek(s * SECTOR + 883)
++    if any(b not in (0, 0x20) for b in f.read(512)):
++        sys.exit('application use area is already in use')
++    tag = b'TM' + struct.pack('>H', 20) + struct.pack('>5I', len(tm), first, 0, 0, 0)
++    f.seek(s * SECTOR + 883)
++    f.write(bytes(1) + tag + bytes(512 - 1 - len(tag)))
++print(f'{tmfile}: {len(tm)} bytes at sector {first}, TM tag in volume descriptor {s}')
+-- 
+2.43.0
+

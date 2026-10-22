@@ -1,0 +1,37 @@
+From b69b78c499d6b72492aefb97a98b08d2d8ea94d2 Mon Sep 17 00:00:00 2001
+From: Alessio Garzi <agarzi@sipwise.com>
+Date: Thu, 22 Oct 2026 17:38:03 +0200
+Subject: [PATCH] remove the fast RAM note from the menu
+
+The menu marked F6 (Dreams of Power) with "&" and explained it below
+the list with "& REQUIRES SOME FAST RAM". Both are gone; the note line
+is left blank so that the rows of the menu, and the joystick bar over
+them, stay where they were.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ dec/6.s | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dec/6.s b/dec/6.s
+index 1013020..e5b62fe 100644
+--- a/dec/6.s
++++ b/dec/6.s
+@@ -931,12 +931,12 @@ STAGE0:
+ 	dc.b	"e F3 - 4WARD -BORN TO RISE HELL    i93 e"
+ 	dc.b	"e F4 - AGGRESSORS/ORACLE-ALLEANCE  i90 e"
+ 	dc.b	"e F5 - DIVINA -HITENSION NEVERBORN i90 e"
+-	dc.b	"e F6 - DREAMS OF POWER -DEMO &     i90 e"
++	dc.b	"e F6 - DREAMS OF POWER -DEMO       i90 e"
+ 	dc.b	"e F7 - INSIDER -INTRO              i89 e"
+ 	dc.b	"e F8 - TRAUMA -FIRST DEMO          i91 e"
+ 	dc.b	"e F9 - VEGA -OFFICIAL PLASMA       i91 e"
+ 	dc.b	"a--------------------------------------s"
+-	dc.b	"       & REQUIRES SOME FAST RAM         "
++	dc.b	"                                        "
+ 	dc.b	" PRESS SPACE (THE LONG ONE) FOR CREDITS "
+ 	dc.b	0						;
+ 
+-- 
+2.43.0
+
